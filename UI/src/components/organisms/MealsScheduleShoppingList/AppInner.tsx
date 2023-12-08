@@ -9,11 +9,11 @@ import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import GeneratorConfigScreen from "./screens/GeneratorConfigScreen";
 import ScheduleScreen from "./screens/ScheduleScreen";
 
-export type TMealsSheduleShoppingList = {
+export type TAppInner = {
     defaultMeals: TMealProps[];
 }
 
-const MealsSheduleShoppingList: FC<TMealsSheduleShoppingList> = ({ defaultMeals }) => {
+const AppInner: FC<TAppInner> = ({ defaultMeals }) => {
     const dispatch = useAppDispatch();
     const activeScreen = useAppSelector(state => state.activeScreen.value);
 
@@ -61,4 +61,4 @@ const MealsSheduleShoppingList: FC<TMealsSheduleShoppingList> = ({ defaultMeals 
     );
 };
 
-export default MealsSheduleShoppingList;
+export default AppInner;
