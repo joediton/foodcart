@@ -1,0 +1,47 @@
+.foodcart {
+  --navHeight: 70px;
+  --screenHeight: calc(100vh - var(--navHeight));
+
+  h2 {
+    @apply h3 self-start;
+  }
+
+  h3 {
+    @apply h6 mb-0;
+  }
+
+  h4 {
+    @apply h6 m-0;
+  }
+
+  &__screen {
+    @apply opacity-0 fixed top-0 right-0 left-0 h-[var(--screenHeight)] overflow-y-auto
+    justify-center transition-all duration-500 p-8 bg-white dark:bg-black;
+  }
+
+  &__nav {
+    @apply bg-white dark:bg-black h-[var(--navHeight)] fixed right-0 bottom-0 left-0 justify-evenly inline-flex text-xs;
+
+    button {
+      @apply bg-[#ddd] dark:bg-[#222] w-[80px] rounded-t-md inline-flex items-center justify-center;
+
+      &:disabled {
+        @apply bg-white dark:bg-black;
+      }
+    }
+  }
+
+  &__row {
+    @apply grid grid-cols-10 gap-4 py-1 w-[100%] max-w-[600px] items-center;
+
+    > div {
+      &:nth-child(1) {
+        @apply col-span-4 text-left;
+      }
+
+      &:nth-child(2) {
+        @apply col-span-6 text-center;
+      }
+    }
+  }
+}
