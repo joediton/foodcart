@@ -1,10 +1,10 @@
-import "./MealsSheduleShoppingListApp.css";
+import "./App.css";
 import { FC } from 'react';
 import MealsSheduleShoppingList, { TMealsSheduleShoppingList } from "./MealsSheduleShoppingList";
 import { Provider } from "react-redux";
-import store from "./redux/MealsScheduleShoppingList.store";
+import store from "./redux/store";
 
-const MealsSheduleShoppingListApp: FC<TMealsSheduleShoppingList> = ({ defaultMeals }) => {
+const App: FC<TMealsSheduleShoppingList> = ({ defaultMeals }) => {
     return (
         <Provider store={store}>
             <MealsSheduleShoppingList defaultMeals={defaultMeals} />
@@ -12,4 +12,4 @@ const MealsSheduleShoppingListApp: FC<TMealsSheduleShoppingList> = ({ defaultMea
     );
 };
 
-export default MealsSheduleShoppingListApp;
+export default App;

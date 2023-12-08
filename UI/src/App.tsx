@@ -1,5 +1,5 @@
-import MealsGenerator from "@/components/organisms/MealsScheduleShoppingList/MealsSheduleShoppingListApp"
-import { Default } from "@/components/organisms/MealsScheduleShoppingList/MealsSheduleShoppingListApp.stories"
+import MealsGenerator from "@/components/organisms/MealsScheduleShoppingList/App"
+import { Default } from "@/components/organisms/MealsScheduleShoppingList/App.stories"
 
 function App() {
   return (

@@ -1,7 +1,7 @@
 import Button from "@/components/atoms/button/Button";
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { useAppSelector } from "../redux/MealsScheduleShoppingList.hooks";
-import { TMeal, TPrepTimingOptions, metricUnits, prepTimingOptions } from "../MealsSheduleShoppingListApp.types";
+import { useAppSelector } from "../redux/hooks";
+import { TMeal, TPrepTimingOptions, metricUnits, prepTimingOptions } from "../types";
 import Dropdown from "@/components/molecules/Dropdown/Dropdown";
 
 const MealsScreen: FC = () => {

@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { daysOfWeek } from "../MealsSheduleShoppingListApp.types";
+import { daysOfWeek } from "../types";
 
-const GeneratedMealsScheduleScreen: FC = () => {
+const ScheduleScreen: FC = () => {
     return (
         <>
             <h2>Meals Schedule</h2>
@@ -31,4 +31,4 @@ const GeneratedMealsScheduleScreen: FC = () => {
     );
 };
 
-export default GeneratedMealsScheduleScreen;
+export default ScheduleScreen;

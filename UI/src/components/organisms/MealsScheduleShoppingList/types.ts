@@ -30,7 +30,4 @@ export type TMeal = {
 
 export type TMealProps = Omit<TMeal, "mealIndex">;
 
-export type TScreens =
-  | "meals"
-  | "mealsScheduleGenerator"
-  | "generatedMealsSchedule";
+export type TScreens = "meals" | "generatorConfig" | "schedule";

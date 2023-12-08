@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../MealsScheduleShoppingList.store";
-import { TScreens } from "../../MealsSheduleShoppingListApp.types";
+import type { RootState } from "../store";
+import { TScreens } from "../../types";
 
 export interface TActiveScreenSlice {
   value: TScreens;
 }
 
 const initialState: TActiveScreenSlice = {
-  value: "mealsScheduleGenerator",
+  value: "generatorConfig",
 };
 
 export const activeScreenSlice = createSlice({

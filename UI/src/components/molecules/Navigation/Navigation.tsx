@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { updateActiveScreen } from '../../organisms/MealsScheduleShoppingList/redux/slices/activeScreen.slice';
-import { useAppDispatch, useAppSelector } from '@/components/organisms/MealsScheduleShoppingList/redux/MealsScheduleShoppingList.hooks';
-import { TScreens } from '@/components/organisms/MealsScheduleShoppingList/MealsSheduleShoppingListApp.types';
+import { useAppDispatch, useAppSelector } from '@/components/organisms/MealsScheduleShoppingList/redux/hooks';
+import { TScreens } from '@/components/organisms/MealsScheduleShoppingList/types';
 
 const Navigation: FC = () => {
     const dispatch = useAppDispatch();
@@ -20,8 +20,8 @@ const Navigation: FC = () => {
             </button>
 
             <button
-                disabled={activeScreen === "generaterConfig"}
-                onClick={() => handleNavButtonClick("generaterConfig")}>
+                disabled={activeScreen === "generatorConfig"}
+                onClick={() => handleNavButtonClick("generatorConfig")}>
 
             </button>
 

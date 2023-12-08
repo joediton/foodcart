@@ -1,10 +1,10 @@
 import Button from "@/components/atoms/button/Button";
 import { FC, ChangeEvent, useState } from "react";
-import { useAppDispatch } from "../redux/MealsScheduleShoppingList.hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { updateActiveScreen } from "../redux/slices/activeScreen.slice";
-import { daysOfWeek, prepTimingOptions } from "../MealsSheduleShoppingListApp.types";
+import { daysOfWeek, prepTimingOptions } from "../types";
 
-const MealsSheduleGeneratorScreen: FC = () => {
+const GeneratorConfigScreen: FC = () => {
     const dispatch = useAppDispatch();
     const [selectedMeals, setSelectedMeals] = useState<{ [day: string]: string }>({});
 
@@ -63,4 +63,4 @@ const MealsSheduleGeneratorScreen: FC = () => {
     )
 }
 
-export default MealsSheduleGeneratorScreen;
+export default GeneratorConfigScreen;

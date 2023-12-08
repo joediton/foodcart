@@ -1,13 +1,13 @@
-import "./MealsSheduleShoppingListApp.css";
+import "./App.css";
 import { FC, useEffect } from 'react';
-import GeneratorScreen from "./screens/MealsSheduleGeneratorScreen";
-import GeneratedMealsScheduleScreen from "./screens/GeneratedMealsScheduleScreen";
 import { LazyMotion, domAnimation, m } from "framer-motion";
-import { useAppDispatch, useAppSelector } from "./redux/MealsScheduleShoppingList.hooks";
 import { updateAllMeals } from "./redux/slices/meals.slice";
 import MealsScreen from "./screens/MealsScreen";
-import { TMealProps } from "./MealsSheduleShoppingListApp.types";
+import { TMealProps } from "./types";
 import Navigation from "@/components/molecules/Navigation/Navigation";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
+import GeneratorConfigScreen from "./screens/GeneratorConfigScreen";
+import ScheduleScreen from "./screens/ScheduleScreen";
 
 export type TMealsSheduleShoppingList = {
     defaultMeals: TMealProps[];
@@ -41,18 +41,18 @@ const MealsSheduleShoppingList: FC<TMealsSheduleShoppingList> = ({ defaultMeals 
 
                 <m.div
                     className="foodcart__screen"
-                    animate={activeScreen === "mealsScheduleGenerator" ? "active" : "inactive"}
+                    animate={activeScreen === "generatorConfig" ? "active" : "inactive"}
                     variants={variants}
                 >
-                    <GeneratorScreen />
+                    <GeneratorConfigScreen />
                 </m.div>
 
                 <m.div
                     className="foodcart__screen"
-                    animate={activeScreen === "generatedMealsSchedule" ? "active" : "inactive"}
+                    animate={activeScreen === "schedule" ? "active" : "inactive"}
                     variants={variants}
                 >
-                    <GeneratedMealsScheduleScreen />
+                    <ScheduleScreen />
                 </m.div>
             </LazyMotion>
 
