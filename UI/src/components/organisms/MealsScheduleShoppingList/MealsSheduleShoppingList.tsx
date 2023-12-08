@@ -4,10 +4,10 @@ import GeneratorScreen from "./screens/MealsSheduleGeneratorScreen";
 import GeneratedMealsScheduleScreen from "./screens/GeneratedMealsScheduleScreen";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "./redux/MealsScheduleShoppingList.hooks";
-import Navigation from "./components/Navigation";
 import { updateAllMeals } from "./redux/slices/meals.slice";
 import MealsScreen from "./screens/MealsScreen";
 import { TMealProps } from "./MealsSheduleShoppingListApp.types";
+import Navigation from "@/components/molecules/Navigation/Navigation";
 
 export type TMealsSheduleShoppingList = {
     defaultMeals: TMealProps[];

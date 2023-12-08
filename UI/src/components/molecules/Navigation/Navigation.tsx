@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { useAppDispatch, useAppSelector } from '../redux/MealsScheduleShoppingList.hooks';
-import { TScreens } from '../MealsSheduleShoppingListApp.types';
-import { updateActiveScreen } from '../redux/slices/activeScreen.slice';
+import { updateActiveScreen } from '../../organisms/MealsScheduleShoppingList/redux/slices/activeScreen.slice';
+import { useAppDispatch, useAppSelector } from '@/components/organisms/MealsScheduleShoppingList/redux/MealsScheduleShoppingList.hooks';
+import { TScreens } from '@/components/organisms/MealsScheduleShoppingList/MealsSheduleShoppingListApp.types';
 
 const Navigation: FC = () => {
     const dispatch = useAppDispatch();
@@ -20,14 +20,14 @@ const Navigation: FC = () => {
             </button>
 
             <button
-                disabled={activeScreen === "mealsScheduleGenerator"}
-                onClick={() => handleNavButtonClick("mealsScheduleGenerator")}>
+                disabled={activeScreen === "generaterConfig"}
+                onClick={() => handleNavButtonClick("generaterConfig")}>
 
             </button>
 
             <button
-                disabled={activeScreen === "generatedMealsSchedule"}
-                onClick={() => handleNavButtonClick("generatedMealsSchedule")}>
+                disabled={activeScreen === "schedule"}
+                onClick={() => handleNavButtonClick("schedule")}>
                 Generated Meals Schedule
             </button>
 
