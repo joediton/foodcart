@@ -1,10 +1,15 @@
-import MealsGenerator from "@/components/organisms/MealsScheduleShoppingList/App"
-import { Default } from "@/components/organisms/MealsScheduleShoppingList/App.stories"
+import "./App.css";
+import { FC } from 'react';
+import AppInner from "@/AppInner";
+import { Provider } from "react-redux";
+import store from "@/redux/store";
 
-function App() {
+const App: FC = () => {
   return (
-    <MealsGenerator {...Default.args} />
-  )
-}
+    <Provider store={store}>
+      <AppInner />
+    </Provider>
+  );
+};
 
-export default App
+export default App;

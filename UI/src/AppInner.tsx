@@ -1,19 +1,14 @@
-import "./App.css";
+import "@/App.css";
 import { FC, useEffect } from 'react';
 import { LazyMotion, domAnimation, m } from "framer-motion";
-import { updateAllMeals } from "./redux/slices/meals.slice";
-import MealsScreen from "./screens/MealsScreen";
-import { TMealProps } from "./types";
+import MealsScreen from "@/components/organisms/MealsScreen";
 import Navigation from "@/components/molecules/Navigation/Navigation";
-import { useAppDispatch, useAppSelector } from "./redux/hooks";
-import GeneratorConfigScreen from "./screens/GeneratorConfigScreen";
-import ScheduleScreen from "./screens/ScheduleScreen";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import GeneratorConfigScreen from "@/components/organisms/GeneratorConfigScreen";
+import ScheduleScreen from "@/components/organisms/ScheduleScreen";
+import { updateAllMeals } from "./redux/slices/meals.slice";
 
-export type TAppInner = {
-    defaultMeals: TMealProps[];
-}
-
-const AppInner: FC<TAppInner> = ({ defaultMeals }) => {
+const AppInner: FC = () => {
     const dispatch = useAppDispatch();
     const activeScreen = useAppSelector(state => state.activeScreen.value);
 
@@ -23,10 +18,14 @@ const AppInner: FC<TAppInner> = ({ defaultMeals }) => {
     }
 
     useEffect(() => {
-        if (defaultMeals) {
-            dispatch(updateAllMeals(defaultMeals))
-        }
-    }, [defaultMeals, dispatch])
+        getMeals();
+    }, [])
+
+    async function getMeals() {
+        const response = await fetch("/meals");
+        const meals = await response.json();
+        dispatch(updateAllMeals(meals));
+    }
 
     return (
         <div className='foodcart'>

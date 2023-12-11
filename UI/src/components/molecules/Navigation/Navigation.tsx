@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { updateActiveScreen } from '../../organisms/MealsScheduleShoppingList/redux/slices/activeScreen.slice';
-import { useAppDispatch, useAppSelector } from '@/components/organisms/MealsScheduleShoppingList/redux/hooks';
-import { TScreens } from '@/components/organisms/MealsScheduleShoppingList/types';
+import { updateActiveScreen } from '@/redux/slices/activeScreen.slice';
+import { useAppDispatch, useAppSelector } from '@//redux/hooks';
+import { TScreens } from '@/types';
 
 const Navigation: FC = () => {
     const dispatch = useAppDispatch();

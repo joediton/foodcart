@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { TScreens } from "../../types";
+import { TScreens } from "../../../../../types";
 
 export interface TActiveScreenSlice {
   value: TScreens;

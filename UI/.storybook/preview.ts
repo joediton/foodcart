@@ -1,6 +1,10 @@
 import { Preview } from "@storybook/react";
+import { rest } from "msw";
+import { initialize, mswLoader } from "msw-storybook-addon";
 import { withThemeByDataAttribute } from "@storybook/addon-themes";
 import "../src/global.css";
+
+initialize();
 
 const preview: Preview = {
   parameters: {
@@ -12,6 +16,7 @@ const preview: Preview = {
       },
     },
   },
+  loaders: [mswLoader],
   decorators: [
     withThemeByDataAttribute({
       themes: {
@@ -22,6 +27,29 @@ const preview: Preview = {
       attributeName: "data-theme",
     }),
   ],
+};
+
+export const parameters = {
+  msw: {
+    handlers: {
+      auth: [
+        rest.get("/login", (req, res, ctx) => {
+          return res(
+            ctx.json({
+              success: true,
+            })
+          );
+        }),
+        rest.get("/logout", (req, res, ctx) => {
+          return res(
+            ctx.json({
+              success: true,
+            })
+          );
+        }),
+      ],
+    },
+  },
 };
 
 export default preview;

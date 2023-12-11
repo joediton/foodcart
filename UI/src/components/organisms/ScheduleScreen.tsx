@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { daysOfWeek } from "../types";
+import { daysOfWeek } from "@/types";
 
 const ScheduleScreen: FC = () => {
     return (

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { TMealProps } from "../../types";
+import { TMealProps } from "../../../../../types";
 
 export interface TMealsSlice {
   value: TMealProps[] | null;

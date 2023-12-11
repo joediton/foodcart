@@ -1,8 +1,8 @@
 import Button from "@/components/atoms/button/Button";
 import { FC, ChangeEvent, useState } from "react";
-import { useAppDispatch } from "../redux/hooks";
-import { updateActiveScreen } from "../redux/slices/activeScreen.slice";
-import { daysOfWeek, prepTimingOptions } from "../types";
+import { updateActiveScreen } from "@/redux/slices/activeScreen.slice";
+import { daysOfWeek, prepTimingOptions } from "@/types";
+import { useAppDispatch } from "@/redux/hooks";
 
 const GeneratorConfigScreen: FC = () => {
     const dispatch = useAppDispatch();
