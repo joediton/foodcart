@@ -1,11 +1,8 @@
-import Button from "@/components/atoms/button/Button";
 import { FC, ChangeEvent, useState } from "react";
-import { updateActiveScreen } from "@/redux/slices/activeScreen.slice";
 import { daysOfWeek, prepTimingOptions } from "@/types";
-import { useAppDispatch } from "@/redux/hooks";
+import { Button, MenuItem, Select } from "@mui/material";
 
-const GeneratorConfigScreen: FC = () => {
-    const dispatch = useAppDispatch();
+const Scheduler: FC = () => {
     const [selectedMeals, setSelectedMeals] = useState<{ [day: string]: string }>({});
 
     const handleMealOptionsSelectChange = (day: string, event: ChangeEvent<HTMLSelectElement>) => {
@@ -13,13 +10,9 @@ const GeneratorConfigScreen: FC = () => {
         setSelectedMeals({ ...selectedMeals, [day]: value });
     };
 
-    const handleGenerateButtonClick = () => {
-        dispatch(updateActiveScreen("generatedMealsSchedule"));
-    }
-
     return (
         <>
-            <h2>Generator</h2>
+            <h2>Scheduler</h2>
 
             <div className='foodcart__row'>
                 <div>
@@ -38,29 +31,29 @@ const GeneratorConfigScreen: FC = () => {
                     </div>
 
                     <div>
-                        <select
+                        <Select
                             id={day.toLowerCase()}
-                            key={day}
                             value={selectedMeals[day] || ''}
                             onChange={(e) => handleMealOptionsSelectChange(day, e)}
+                            className="w-full"
                         >
                             {prepTimingOptions.map((option) => (
-                                <option key={option} value={option.toLowerCase()}>
+                                <MenuItem key={option} value={option.toLowerCase()}>
                                     {option}
-                                </option>
+                                </MenuItem>
                             ))}
-                        </select>
+                        </Select>
                     </div>
                 </div>
             ))}
 
             <Button
-                className="mt-6"
-                onClick={handleGenerateButtonClick}>
+                variant="outlined"
+            >
                 Generate
             </Button>
         </>
     )
 }
 
-export default GeneratorConfigScreen;
+export default Scheduler;

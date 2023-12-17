@@ -1,6 +1,4 @@
-import { rest } from "msw";
-
-const allMeals = [
+const meals = [
   {
     name: "Ommlettes",
     prepTime: "quick",
@@ -61,6 +59,4 @@ const allMeals = [
   },
 ];
 
-export const getUserMeals = rest.get("/meals", (req, res, ctx) => {
-  return res(ctx.json([...allMeals]));
-});
+export default meals;

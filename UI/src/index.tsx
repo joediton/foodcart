@@ -1,18 +1,26 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import "./global.css";
+import { StrictMode } from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx';
 
-(function darkMode() {
-  const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 
-  if (prefersDarkMode) {
-    document.documentElement.setAttribute("data-theme", "dark");
-  }
-})();
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+if (import.meta.env.MODE === "development") {
+  import("./browser")
+    .then(({ worker }) => {
+      worker.start();
+    })
+    .then(() => {
+      root.render(
+        <StrictMode>
+          <App />
+        </StrictMode>
+      );
+    });
+} else {
+  root.render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  )
+}

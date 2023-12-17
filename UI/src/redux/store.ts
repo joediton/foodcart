@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import activeScreenReducer from "./slices/activeScreen.slice";
 import mealsReducer from "./slices/meals.slice";
 
 const store = configureStore({
   reducer: {
-    activeScreen: activeScreenReducer,
     meals: mealsReducer,
   },
 });

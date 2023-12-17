@@ -1,12 +1,27 @@
-import Button from "@/components/atoms/button/Button";
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { TMeal, TPrepTimingOptions, metricUnits, prepTimingOptions } from "@/types";
-import Dropdown from "@/components/molecules/Dropdown/Dropdown";
+import { updateAllMeals } from "@/redux/slices/meals.slice";
+import { Accordion, AccordionDetails, AccordionSummary, Button, MenuItem, Select, TextField, Typography } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const MealsScreen: FC = () => {
+const Meals: FC = () => {
     const meals = useAppSelector(state => state.meals.value);
     const [mealUpdates, setMealUpdates] = useState<TMeal[] | null>(null);
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (!meals) {
+            getMeals();
+        }
+    }, [meals])
+
+    async function getMeals() {
+        const response = await fetch("api/meals");
+        const meals = await response.json();
+        dispatch(updateAllMeals(meals));
+    }
 
     useEffect(() => {
         if (meals) {
@@ -84,55 +99,59 @@ const MealsScreen: FC = () => {
         if (!mealUpdates || mealUpdates.length === 0) return null;
 
         return (
-            <Dropdown toggler={<h3 className="p-4 text-left">{prepTime}</h3>}>
-                <div className="flex flex-col px-4 pb-4">
-                    {meals.map((meal) => {
-                        if (meal && meal.prepTime == prepTime) {
-                            return (
-                                <div key={meal.mealIndex}>
-                                    <h4>{meal.name}</h4>
+            <>
+                {meals.map((meal) => {
+                    if (meal && meal.prepTime == prepTime) {
+                        return (
+                            <Accordion key={meal.mealIndex}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                >
+                                    {meal.name}
+                                </AccordionSummary>
+                                <AccordionDetails>
 
                                     {meal.ingredients.map((ingredient, ii) => {
                                         return (
                                             <div key={meal.mealIndex + ii} className="flex mt-2 gap-[10px]">
-                                                <input
+                                                <TextField
                                                     type="text"
                                                     value={ingredient.description}
                                                     className="flex-1"
                                                     onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "description")}
                                                 />
 
-                                                <input
+                                                <TextField
                                                     type="text"
                                                     value={ingredient.qty}
                                                     className="w-[60px] text-center"
                                                     onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "qty")}
                                                 />
 
-                                                <select
+                                                <Select
                                                     value={ingredient.unit}
                                                     className="w-[60px] text-center"
                                                     onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "unit")}
                                                 >
                                                     {metricUnits.map((unit, index) => (
-                                                        <option value={unit} key={index}>{unit}</option>
+                                                        <MenuItem value={unit} key={index}>{unit}</MenuItem>
                                                     ))}
-                                                </select>
+                                                </Select>
                                             </div>
                                         )
                                     })}
 
                                     <Button
-                                        className="self-end mt-4"
+                                        variant="outlined"
                                         onClick={() => handleAddIngredientButtonClick(meal.mealIndex)}
+                                        className="!mt-[10px]"
                                     >Add Ingredient</Button>
-                                </div>
-                            );
-                        }
-                    })}
-
-                </div>
-            </Dropdown>
+                                </AccordionDetails>
+                            </Accordion>
+                        );
+                    }
+                })}
+            </>
         )
     }
 
@@ -143,21 +162,26 @@ const MealsScreen: FC = () => {
             <div className="screen-body">
                 <div className="flex flex-col gap-[10px]">
                     {(mealUpdates && mealUpdates.length > 0) &&
-                        prepTimingOptions.map((option) => (
-                            <div className="border border-grey-300 dark:border-grey-700 rounded-md">
-                                {renderMealsByPrepTime(mealUpdates, option)}
-                            </div>
+                        prepTimingOptions.map((option, index) => (
+                            <Accordion key={index}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    className="capitalize"
+                                >
+                                    {option}
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    {renderMealsByPrepTime(mealUpdates, option)}
+                                </AccordionDetails>
+                            </Accordion>
                         ))
                     }
 
-                    <Button
-                        className="mt-6"
-                        type="submit"
-                    >Save</Button>
+                    <Button variant="contained" className="!mt-[10px]">Save</Button>
                 </div>
             </div>
         </>
     );
 }
 
-export default MealsScreen;
+export default Meals;
