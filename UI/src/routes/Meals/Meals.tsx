@@ -1,9 +1,10 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { TMeal, TPrepTimingOptions, metricUnits, prepTimingOptions } from "@/types";
+import { TMeal, metricUnits } from "@/types";
 import { updateAllMeals } from "@/redux/slices/meals.slice";
 import { Accordion, AccordionDetails, AccordionSummary, Button, MenuItem, Select, TextField, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import squidexClient from "@/helpers/squidexClient";
 
 const Meals: FC = () => {
     const meals = useAppSelector(state => state.meals.value);
@@ -18,8 +19,8 @@ const Meals: FC = () => {
     }, [meals])
 
     async function getMeals() {
-        const response = await fetch("api/meals");
-        const meals = await response.json();
+        const response = await squidexClient.contents.getContents("meal");
+        console.log(response);
         dispatch(updateAllMeals(meals));
     }
 
@@ -95,14 +96,14 @@ const Meals: FC = () => {
         setMealUpdates(copyOfMeals);
     }
 
-    const renderMealsByPrepTime = (meals: TMeal[], prepTime: TPrepTimingOptions) => {
-        if (!mealUpdates || mealUpdates.length === 0) return null;
+    return (
+        <>
+            <h2 className="screen-header">Meals</h2>
 
-        return (
-            <>
-                {meals.map((meal) => {
-                    if (meal && meal.prepTime == prepTime) {
-                        return (
+            <div className="screen-body">
+                <div className="flex flex-col gap-[10px]">
+                    {(mealUpdates && mealUpdates.length > 0) &&
+                        mealUpdates.map((meal) => (
                             <Accordion key={meal.mealIndex}>
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
@@ -148,34 +149,7 @@ const Meals: FC = () => {
                                     >Add Ingredient</Button>
                                 </AccordionDetails>
                             </Accordion>
-                        );
-                    }
-                })}
-            </>
-        )
-    }
-
-    return (
-        <>
-            <h2 className="screen-header">Meals</h2>
-
-            <div className="screen-body">
-                <div className="flex flex-col gap-[10px]">
-                    {(mealUpdates && mealUpdates.length > 0) &&
-                        prepTimingOptions.map((option, index) => (
-                            <Accordion key={index}>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    className="capitalize"
-                                >
-                                    {option}
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    {renderMealsByPrepTime(mealUpdates, option)}
-                                </AccordionDetails>
-                            </Accordion>
-                        ))
-                    }
+                        ))}
 
                     <Button variant="contained" className="!mt-[10px]">Save</Button>
                 </div>
