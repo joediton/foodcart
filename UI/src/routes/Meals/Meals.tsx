@@ -2,27 +2,14 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { TMeal, metricUnits } from "@/types";
 import { updateAllMeals } from "@/redux/slices/meals.slice";
-import { Accordion, AccordionDetails, AccordionSummary, Button, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Button, MenuItem, Select, TextField } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import squidexClient from "@/helpers/squidexClient";
 
 const Meals: FC = () => {
     const meals = useAppSelector(state => state.meals.value);
     const [mealUpdates, setMealUpdates] = useState<TMeal[] | null>(null);
-
     const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        if (!meals) {
-            getMeals();
-        }
-    }, [meals])
-
-    async function getMeals() {
-        const response = await squidexClient.contents.getContents("meal");
-        console.log(response);
-        dispatch(updateAllMeals(meals));
-    }
 
     useEffect(() => {
         if (meals) {
@@ -34,11 +21,20 @@ const Meals: FC = () => {
             })
 
             setMealUpdates(copyOfMeals);
+        } else {
+            getMeals();
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [meals])
 
+    async function getMeals() {
+        const response = await squidexClient.contents.getContents("meal");
+        dispatch(updateAllMeals([...response.items].map((item) => item.data as TMeal)));
+    }
+
     const handleFieldChange = (
-        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
         mealIndex: number,
         ingredientIndex: number,
         property: string
@@ -51,16 +47,20 @@ const Meals: FC = () => {
             if (meal.mealIndex === mealIndex) {
                 return {
                     ...meal,
-                    ingredients: meal.ingredients.map((ingredient, ii) => {
-                        if (ii === ingredientIndex) {
-                            return {
-                                ...ingredient,
-                                [property]: value,
+                    ingredients: {
+                        ...meal.ingredients,
+                        iv: meal.ingredients.iv.map((ingredient, ii) => {
+                            if (ii === ingredientIndex) {
+                                return {
+                                    ...ingredient,
+                                    [property]: value,
+                                }
+                            } else {
+                                return ingredient
                             }
-                        } else {
-                            return ingredient
-                        }
-                    })
+                        })
+                    }
+
                 }
             } else {
                 return meal;
@@ -79,14 +79,17 @@ const Meals: FC = () => {
             if (meal.mealIndex === mealIndex) {
                 return {
                     ...meal,
-                    ingredients: [
+                    ingredients: {
                         ...meal.ingredients,
-                        {
-                            description: "",
-                            qty: 0,
-                            unit: "",
-                        }
-                    ]
+                        iv: [
+                            ...meal.ingredients.iv,
+                            {
+                                name: "",
+                                quantity: 0,
+                                metricUnit: "",
+                            }
+                        ]
+                    }
                 }
             } else {
                 return meal;
@@ -108,29 +111,29 @@ const Meals: FC = () => {
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                 >
-                                    {meal.name}
+                                    {meal.name.iv}
                                 </AccordionSummary>
                                 <AccordionDetails>
 
-                                    {meal.ingredients.map((ingredient, ii) => {
+                                    {meal.ingredients.iv.map((ingredient, ii) => {
                                         return (
                                             <div key={meal.mealIndex + ii} className="flex mt-2 gap-[10px]">
                                                 <TextField
                                                     type="text"
-                                                    value={ingredient.description}
+                                                    value={ingredient.name}
                                                     className="flex-1"
                                                     onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "description")}
                                                 />
 
                                                 <TextField
                                                     type="text"
-                                                    value={ingredient.qty}
+                                                    value={ingredient.quantity}
                                                     className="w-[60px] text-center"
                                                     onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "qty")}
                                                 />
 
                                                 <Select
-                                                    value={ingredient.unit}
+                                                    value={ingredient.metricUnit}
                                                     className="w-[60px] text-center"
                                                     onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "unit")}
                                                 >

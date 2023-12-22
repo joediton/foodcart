@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { TMealProps } from "../../../../../types";
+import { TMeal } from "@/types";
 
 export interface TMealsSlice {
-  value: TMealProps[] | null;
+  value: TMeal[] | null;
 }
 
 const initialState: TMealsSlice = {
@@ -14,7 +14,7 @@ export const mealsSlice = createSlice({
   name: "meals",
   initialState,
   reducers: {
-    updateAllMeals: (state, action: PayloadAction<TMealProps[]>) => {
+    updateAllMeals: (state, action: PayloadAction<TMeal[]>) => {
       state.value = action.payload;
     },
   },

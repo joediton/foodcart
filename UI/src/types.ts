@@ -1,3 +1,5 @@
+import { ContentDto, SchemaDto } from "@squidex/squidex/api";
+
 export const daysOfWeek = [
   "Monday",
   "Tuesday",
@@ -15,19 +17,39 @@ export type TPrepTimingOptions = (typeof prepTimingOptions)[number];
 export const metricUnits = ["", "g", "ml", "l", "kg", "pack(s)"] as const;
 export type TMetricUnits = (typeof metricUnits)[number];
 
-export type TIngredient = {
-  description: string;
-  qty: number;
-  unit: TMetricUnits | string;
+export type TResponse<Data> = {
+  items: TResponseItem<Data>[];
+};
+
+export type TResponseItem<Data> = ContentDto & {
+  data: Data;
 };
 
 export type TMeal = {
-  name: string;
-  prepTime: TPrepTimingOptions;
-  ingredients: TIngredient[];
+  name: TMealName;
+  timingCategory: TimingCategory;
+  ingredients: TIngredients;
   mealIndex: number;
 };
 
-export type TMealProps = Omit<TMeal, "mealIndex">;
+export type TIngredients = {
+  iv: TIngredient[];
+};
 
-export type TScreens = "meals" | "generatorConfig" | "schedule";
+export type TIngredient = SchemaDto & {
+  name: string;
+  quantity: number;
+  metricUnit: null | string;
+};
+
+export type TMealName = {
+  iv: string;
+};
+
+export type TimingCategory = {
+  iv: TTimingCategoryIv;
+};
+
+export type TTimingCategoryIv = SchemaDto & {
+  name: string;
+};
