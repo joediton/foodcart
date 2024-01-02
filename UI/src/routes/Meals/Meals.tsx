@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { TMeal, metricUnits } from "@/types";
 import { updateAllMeals } from "@/redux/slices/meals.slice";
-import { Accordion, AccordionDetails, AccordionSummary, Button, MenuItem, Select, TextField } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import squidexClient from "@/helpers/squidexClient";
 
@@ -30,11 +30,11 @@ const Meals: FC = () => {
 
     async function getMeals() {
         const response = await squidexClient.contents.getContents("meal");
-        dispatch(updateAllMeals([...response.items].map((item) => item.data as TMeal)));
+        dispatch(updateAllMeals([...response.items as unknown as TMeal[]]));
     }
 
     const handleFieldChange = (
-        e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+        e: SelectChangeEvent<string | null> | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
         mealIndex: number,
         ingredientIndex: number,
         property: string
@@ -47,20 +47,22 @@ const Meals: FC = () => {
             if (meal.mealIndex === mealIndex) {
                 return {
                     ...meal,
-                    ingredients: {
-                        ...meal.ingredients,
-                        iv: meal.ingredients.iv.map((ingredient, ii) => {
-                            if (ii === ingredientIndex) {
-                                return {
-                                    ...ingredient,
-                                    [property]: value,
+                    data: {
+                        ...meal.data,
+                        ingredients: {
+                            ...meal.data.ingredients,
+                            iv: meal.data.ingredients.iv.map((ingredient, ii) => {
+                                if (ii === ingredientIndex) {
+                                    return {
+                                        ...ingredient,
+                                        [property]: value,
+                                    }
+                                } else {
+                                    return ingredient
                                 }
-                            } else {
-                                return ingredient
-                            }
-                        })
+                            })
+                        }
                     }
-
                 }
             } else {
                 return meal;
@@ -79,16 +81,19 @@ const Meals: FC = () => {
             if (meal.mealIndex === mealIndex) {
                 return {
                     ...meal,
-                    ingredients: {
-                        ...meal.ingredients,
-                        iv: [
-                            ...meal.ingredients.iv,
-                            {
-                                name: "",
-                                quantity: 0,
-                                metricUnit: "",
-                            }
-                        ]
+                    data: {
+                        ...meal.data,
+                        ingredients: {
+                            ...meal.data.ingredients,
+                            iv: [
+                                ...meal.data.ingredients.iv,
+                                {
+                                    name: "",
+                                    quantity: 0,
+                                    metricUnit: "",
+                                }
+                            ]
+                        }
                     }
                 }
             } else {
@@ -96,6 +101,8 @@ const Meals: FC = () => {
             }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         setMealUpdates(copyOfMeals);
     }
 
@@ -111,31 +118,31 @@ const Meals: FC = () => {
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                 >
-                                    {meal.name.iv}
+                                    {meal.data.name.iv}
                                 </AccordionSummary>
-                                <AccordionDetails>
 
-                                    {meal.ingredients.iv.map((ingredient, ii) => {
+                                <AccordionDetails>
+                                    {meal.data.ingredients.iv.map((ingredient, ii) => {
                                         return (
                                             <div key={meal.mealIndex + ii} className="flex mt-2 gap-[10px]">
                                                 <TextField
                                                     type="text"
                                                     value={ingredient.name}
                                                     className="flex-1"
-                                                    onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "description")}
+                                                    onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "name")}
                                                 />
 
                                                 <TextField
                                                     type="text"
                                                     value={ingredient.quantity}
                                                     className="w-[60px] text-center"
-                                                    onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "qty")}
+                                                    onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "quantity")}
                                                 />
 
                                                 <Select
                                                     value={ingredient.metricUnit}
                                                     className="w-[60px] text-center"
-                                                    onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "unit")}
+                                                    onChange={(e) => handleFieldChange(e, meal.mealIndex, ii, "metricUnit")}
                                                 >
                                                     {metricUnits.map((unit, index) => (
                                                         <MenuItem value={unit} key={index}>{unit}</MenuItem>

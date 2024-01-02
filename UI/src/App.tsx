@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { Provider as ReduxProvider } from 'react-redux';
+import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import store from './redux/store.ts';
 import Root from './routes/Root/Root.tsx';
 import Error from './routes/Error/Error.tsx';
@@ -15,7 +16,6 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 
 const router = createBrowserRouter([
   {

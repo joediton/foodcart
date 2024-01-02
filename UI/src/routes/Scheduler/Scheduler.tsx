@@ -1,11 +1,11 @@
-import { FC, ChangeEvent, useState } from "react";
+import { FC, useState } from "react";
 import { daysOfWeek, prepTimingOptions } from "@/types";
-import { Button, MenuItem, Select } from "@mui/material";
+import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 const Scheduler: FC = () => {
     const [selectedMeals, setSelectedMeals] = useState<{ [day: string]: string }>({});
 
-    const handleMealOptionsSelectChange = (day: string, event: ChangeEvent<HTMLSelectElement>) => {
+    const handleMealOptionsSelectChange = (day: string, event: SelectChangeEvent<string>) => {
         const { value } = event.target;
         setSelectedMeals({ ...selectedMeals, [day]: value });
     };

@@ -17,29 +17,13 @@ export type TPrepTimingOptions = (typeof prepTimingOptions)[number];
 export const metricUnits = ["", "g", "ml", "l", "kg", "pack(s)"] as const;
 export type TMetricUnits = (typeof metricUnits)[number];
 
-export type TResponse<Data> = {
-  items: TResponseItem<Data>[];
-};
-
-export type TResponseItem<Data> = ContentDto & {
-  data: Data;
-};
-
-export type TMeal = {
-  name: TMealName;
-  timingCategory: TimingCategory;
-  ingredients: TIngredients;
+export type TMeal = ContentDto & {
+  data: {
+    name: TMealName;
+    timingCategory: TimingCategory;
+    ingredients: TIngredients;
+  };
   mealIndex: number;
-};
-
-export type TIngredients = {
-  iv: TIngredient[];
-};
-
-export type TIngredient = SchemaDto & {
-  name: string;
-  quantity: number;
-  metricUnit: null | string;
 };
 
 export type TMealName = {
@@ -52,4 +36,14 @@ export type TimingCategory = {
 
 export type TTimingCategoryIv = SchemaDto & {
   name: string;
+};
+
+export type TIngredients = {
+  iv: TIngredient[];
+};
+
+export type TIngredient = SchemaDto & {
+  name: string;
+  quantity: number;
+  metricUnit: null | string;
 };
