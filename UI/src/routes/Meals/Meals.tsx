@@ -5,11 +5,13 @@ import { updateAllMeals } from "@/redux/slices/meals.slice";
 import { Accordion, AccordionDetails, AccordionSummary, Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import squidexClient from "@/helpers/squidexClient";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Meals: FC = () => {
     const meals = useAppSelector(state => state.meals.value);
     const [mealUpdates, setMealUpdates] = useState<TMeal[] | null>(null);
     const dispatch = useAppDispatch();
+    const { isAuthenticated, user } = useAuth0();
 
     useEffect(() => {
         if (meals) {
@@ -106,6 +108,29 @@ const Meals: FC = () => {
         setMealUpdates(copyOfMeals);
     }
 
+    async function saveMeals() {
+        if (isAuthenticated && user?.email) {
+            const getResponse = await squidexClient.contents.getContents(
+                "user",
+                {
+                    filter: `data/email/iv eq '${user?.email}'`
+                }
+            );
+            console.log(getResponse);
+
+            // if (getResponse.items.length === 1) {
+            //     const id = getResponse.items[0].id;
+
+            //     const putResponse = await squidexClient.contents.putContent("user", id, {
+            //         email: { iv: user?.email },
+            //         meals: mealUpdates
+            //     });
+
+            //     console.log(putResponse);
+            // }
+        }
+    }
+
     return (
         <>
             <h2 className="screen-header">Meals</h2>
@@ -161,7 +186,11 @@ const Meals: FC = () => {
                             </Accordion>
                         ))}
 
-                    <Button variant="contained" className="!mt-[10px]">Save</Button>
+                    <Button
+                        variant="contained"
+                        className="!mt-[10px]"
+                        onClick={saveMeals}
+                    >Save</Button>
                 </div>
             </div>
         </>

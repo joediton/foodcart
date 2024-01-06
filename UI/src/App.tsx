@@ -4,6 +4,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
 import { Provider as ReduxProvider } from 'react-redux';
 import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import store from './redux/store.ts';
@@ -16,6 +17,9 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+
+const authDomain = import.meta.env.VITE_AUTH_DOMAIN;
+const authClientId = import.meta.env.VITE_AUTH_CLIENT_ID;
 
 const router = createBrowserRouter([
   {
@@ -64,9 +68,17 @@ const App: FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ReduxProvider store={store}>
-        <RouterProvider router={router} />
-      </ReduxProvider>
+      <Auth0Provider
+        domain={authDomain}
+        clientId={authClientId}
+        authorizationParams={{
+          redirect_uri: window.location.origin
+        }}
+      >
+        <ReduxProvider store={store}>
+          <RouterProvider router={router} />
+        </ReduxProvider>
+      </Auth0Provider>
     </ThemeProvider>
   );
 };
