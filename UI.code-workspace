@@ -1,11 +1,14 @@
 {
-	"folders": [
-		{
-			"path": "UI"
-		},
-		{
-			"path": "."
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "UI"
+    },
+    {
+      "path": "CMS"
+    },
+    {
+      "path": "."
+    }
+  ],
+  "settings": {}
 }
