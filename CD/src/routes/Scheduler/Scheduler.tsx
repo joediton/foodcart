@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { daysOfWeek, prepTimingOptions } from "@/types";
+import { daysOfWeek, timingCategories } from "@/types";
 import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 const Scheduler: FC = () => {
@@ -37,7 +37,7 @@ const Scheduler: FC = () => {
                             onChange={(e) => handleMealOptionsSelectChange(day, e)}
                             className="w-full"
                         >
-                            {prepTimingOptions.map((option) => (
+                            {timingCategories.map((option) => (
                                 <MenuItem key={option} value={option.toLowerCase()}>
                                     {option}
                                 </MenuItem>

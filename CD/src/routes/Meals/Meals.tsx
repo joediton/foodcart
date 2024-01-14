@@ -1,21 +1,19 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { TMeal, metricUnits } from "@/types";
-import { updateAllMeals } from "@/redux/slices/meals.slice";
 import { Accordion, AccordionDetails, AccordionSummary, Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import squidexClient from "@/helpers/squidexClient";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
+import All_MEALS from "@/queries/meals/allMeals";
+import { useQuery } from "@apollo/client";
 
 const Meals: FC = () => {
-    const meals = useAppSelector(state => state.meals.value);
     const [mealUpdates, setMealUpdates] = useState<TMeal[] | null>(null);
-    const dispatch = useAppDispatch();
-    const { isAuthenticated, user } = useAuth0();
+    // const { isAuthenticated, user } = useAuth0();
+    const { data, loading, error } = useQuery(All_MEALS);
 
     useEffect(() => {
-        if (meals) {
-            const copyOfMeals = [...meals].map((meal, index) => {
+        if (data) {
+            const copyOfMeals = [...data.meals.data].map((meal, index) => {
                 return {
                     ...meal,
                     mealIndex: index,
@@ -23,17 +21,10 @@ const Meals: FC = () => {
             })
 
             setMealUpdates(copyOfMeals);
-        } else {
-            getMeals();
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [meals])
-
-    async function getMeals() {
-        const response = await squidexClient.contents.getContents("meal");
-        dispatch(updateAllMeals([...response.items as unknown as TMeal[]]));
-    }
+    }, [data, loading, error])
 
     const handleFieldChange = (
         e: SelectChangeEvent<string | null> | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -49,11 +40,10 @@ const Meals: FC = () => {
             if (meal.mealIndex === mealIndex) {
                 return {
                     ...meal,
-                    data: {
-                        ...meal.data,
+                    attributes: {
+                        ...meal.attributes,
                         ingredients: {
-                            ...meal.data.ingredients,
-                            iv: meal.data.ingredients.iv.map((ingredient, ii) => {
+                            ...meal.attributes.ingredients.map((ingredient, ii) => {
                                 if (ii === ingredientIndex) {
                                     return {
                                         ...ingredient,
@@ -83,19 +73,16 @@ const Meals: FC = () => {
             if (meal.mealIndex === mealIndex) {
                 return {
                     ...meal,
-                    data: {
-                        ...meal.data,
-                        ingredients: {
-                            ...meal.data.ingredients,
-                            iv: [
-                                ...meal.data.ingredients.iv,
-                                {
-                                    name: "",
-                                    quantity: 0,
-                                    metricUnit: "",
-                                }
-                            ]
-                        }
+                    attributes: {
+                        ...meal.attributes,
+                        ingredients: [
+                            ...meal.attributes.ingredients,
+                            {
+                                name: "",
+                                quantity: 0,
+                                metricUnit: "",
+                            }
+                        ]
                     }
                 }
             } else {
@@ -109,26 +96,9 @@ const Meals: FC = () => {
     }
 
     async function saveMeals() {
-        if (isAuthenticated && user?.email) {
-            const getResponse = await squidexClient.contents.getContents(
-                "user",
-                {
-                    filter: `data/email/iv eq '${user?.email}'`
-                }
-            );
-            console.log(getResponse);
-
-            // if (getResponse.items.length === 1) {
-            //     const id = getResponse.items[0].id;
-
-            //     const putResponse = await squidexClient.contents.putContent("user", id, {
-            //         email: { iv: user?.email },
-            //         meals: mealUpdates
-            //     });
-
-            //     console.log(putResponse);
-            // }
-        }
+        // if (isAuthenticated && user?.email) {
+        //     // Do something 
+        // }
     }
 
     return (
@@ -143,11 +113,11 @@ const Meals: FC = () => {
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                 >
-                                    {meal.data.name.iv}
+                                    {meal.attributes.name}
                                 </AccordionSummary>
 
                                 <AccordionDetails>
-                                    {meal.data.ingredients.iv.map((ingredient, ii) => {
+                                    {meal.attributes.ingredients.map((ingredient, ii) => {
                                         return (
                                             <div key={meal.mealIndex + ii} className="flex mt-2 gap-[10px]">
                                                 <TextField
