@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_meals_ingredients",
+  "info": {
+    "displayName": "Ingredient",
+    "icon": "cube",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "metricUnit": {
+      "type": "enumeration",
+      "enum": [
+        "g",
+        "kg",
+        "l",
+        "ml",
+        "pack"
+      ]
+    }
+  }
+}

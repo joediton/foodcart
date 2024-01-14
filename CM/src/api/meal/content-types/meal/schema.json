@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "meals",
+  "info": {
+    "singularName": "meal",
+    "pluralName": "meals",
+    "displayName": "Meal",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "timingCategory": {
+      "type": "enumeration",
+      "enum": [
+        "quick",
+        "normal",
+        "slow"
+      ],
+      "required": true
+    },
+    "ingredients": {
+      "type": "component",
+      "repeatable": true,
+      "component": "meals.ingredient",
+      "required": false
+    }
+  }
+}
