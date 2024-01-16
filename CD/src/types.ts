@@ -22,6 +22,7 @@ export type TMeal = {
     ingredients: TIngredient[];
   };
   mealIndex: number;
+  editMode: boolean;
 };
 
 export type TIngredient = {

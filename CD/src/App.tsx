@@ -6,10 +6,6 @@ import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import { ApolloProvider } from "@apollo/client";
 import Routes from "./routes/Routes.tsx";
 import store from './redux/store.ts';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import appolloClient from "./helpers/appolloClient.ts";
 
 const authDomain = import.meta.env.VITE_AUTH_DOMAIN;
@@ -21,6 +17,9 @@ const App: React.FC = () => {
   const theme = React.useMemo(
     () =>
       createTheme({
+        typography: {
+          fontFamily: `'Poppins', sans-serif`,
+        },
         palette: {
           mode: prefersDarkMode ? 'dark' : 'light',
         },

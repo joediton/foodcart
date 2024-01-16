@@ -6,6 +6,8 @@
     --gutterWidth: 20px;
     --containerWidth: calc(100% - var(--gutterWidth) * 2);
     --containerMaxWidth: 1200px;
+    --headerHeight: 68px;
+    --footerHeight: 56px;
 
     @screen lg {
       --gutterWidth: 40px;
@@ -16,32 +18,33 @@
 
   body {
     /* Dark styles */
-    @apply transition-colors dark:bg-gray-800 dark:text-white;
+    @apply transition-colors dark:bg-[#333] 
+    dark:text-white pt-[var(--headerHeight)] pb-[var(--footerHeight)];
   }
 
   h1,
   .h1 {
-    @apply heading text-5xl;
+    @apply heading text-3xl;
   }
 
   h2,
   .h2 {
-    @apply heading text-4xl;
+    @apply heading text-2xl;
   }
 
   h3,
   .h3 {
-    @apply heading text-3xl;
+    @apply heading text-xl;
   }
 
   h4,
   .h4 {
-    @apply heading text-2xl;
+    @apply heading text-lg;
   }
 
   h5,
   .h5 {
-    @apply heading text-xl;
+    @apply heading text-lg;
   }
 
   h6,
@@ -61,17 +64,17 @@
     @apply list list-decimal;
   }
 
-  input,
+  /* input,
   textarea,
   select {
     @apply w-full py-1 px-2 rounded-md bg-[#eee] border border-[#ccc] 
     dark:bg-[#111] dark:border-[#222] dark:text-white;
-  }
+  } */
 }
 
 @layer utilities {
   .heading {
-    @apply leading-tight mb-5;
+    @apply font-bold leading-tight mt-8 mb-5;
   }
 
   .list {
@@ -79,7 +82,8 @@
   }
 
   .container {
-    @apply w-[var(--containerWidth)] max-w-[var(--containerMaxWidth)] min-w-[var(--containerMaxWidth)] mx-auto;
+    @apply w-[var(--containerWidth)] max-w-[var(--containerMaxWidth)] 
+    min-w-[var(--containerMaxWidth)] mx-auto;
   }
 
   .base-grid {
