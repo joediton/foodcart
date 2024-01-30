@@ -25,6 +25,7 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
     return (
         <>
             <TextField
+                label="Name"
                 type="text"
                 value={name}
                 className="flex-1"
@@ -33,6 +34,7 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
             />
 
             <TextField
+                label="QTY"
                 type="text"
                 value={quantity}
                 className="w-[60px] text-center"
@@ -41,6 +43,7 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
             />
 
             <Select
+                label="Metric Unit"
                 defaultValue={metricUnits[0]}
                 value={metricUnit}
                 className="w-[60px] text-center"

@@ -9,7 +9,8 @@ import {
     FormControlLabel,
     FormLabel,
     Radio,
-    RadioGroup
+    RadioGroup,
+    TextField
 } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIngredient from "../EditIngredient/EditIngredient";
@@ -19,12 +20,14 @@ import UPDATE_MEAL from "@/graphql/mutations/updateMeal";
 export type TViewEditMealProps = TMeal;
 
 const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
-    const [editMode, setEditMode] = React.useState<boolean>(false);
+    const [editMode, setEditMode] = React.useState<boolean>(props.editMode);
+    const [name, setName] = React.useState<string>(props.attributes.name);
     const [timingCategory, setTimingCategory] = React.useState<string>(props.attributes.timingCategory);
     const [ingredients, setIngredients] = React.useState<TIngredient[]>(props.attributes.ingredients);
     const [updateMeal] = useMutation(UPDATE_MEAL, {
         variables: {
             id: props.id,
+            name,
             timingCategory,
             ingredients,
         },
@@ -56,11 +59,11 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
     }
 
     return (
-        <Accordion key={props.id}>
+        <Accordion>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
             >
-                <h2 className="my-0">{props.attributes.name}</h2>
+                <h2 className="my-0">{name}</h2>
             </AccordionSummary>
 
             <AccordionDetails>
@@ -110,31 +113,42 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
 
                 {editMode && (
                     <form onSubmit={handleFormSubmit}>
-                        <FormControl>
-                            <FormLabel
-                                id="timing-category"
-                            >Timing Category</FormLabel>
-                            <RadioGroup
-                                row
-                                aria-labelledby="timing-category"
-                            >
-                                {timingCategories.map((category, index) => (
-                                    <span key={index}>
-                                        <FormControlLabel
-                                            value={category}
-                                            control={
-                                                <Radio
-                                                    checked={timingCategory === category}
-                                                    onChange={(e) => setTimingCategory(e.target.value)}
-                                                    required={true}
-                                                />
-                                            }
-                                            label={category}
-                                        />
-                                    </span>
-                                ))}
-                            </RadioGroup>
-                        </FormControl>
+                        <TextField
+                            label="Name"
+                            type="text"
+                            value={name}
+                            className="w-full"
+                            onChange={(e) => setName(e.target.value)}
+                            required={true}
+                        />
+
+                        <div className="mt-[30px]">
+                            <FormControl required={true}>
+                                <FormLabel
+                                    id="timing-category"
+                                >Timing Category</FormLabel>
+
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="timing-category"
+                                >
+                                    {timingCategories.map((category, index) => (
+                                        <span key={index}>
+                                            <FormControlLabel
+                                                value={category}
+                                                control={
+                                                    <Radio
+                                                        checked={timingCategory === category}
+                                                        onChange={(e) => setTimingCategory(e.target.value)}
+                                                    />
+                                                }
+                                                label={category}
+                                            />
+                                        </span>
+                                    ))}
+                                </RadioGroup>
+                            </FormControl>
+                        </div>
 
                         {ingredients.length > 0 && (
                             <>

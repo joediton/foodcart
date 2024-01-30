@@ -7,6 +7,7 @@ import Error from '@/routes/Error/Error.tsx';
 import Meals from '@/routes/Meals/Meals.tsx';
 import ShoppingList from '@/routes/ShoppingList/ShoppingList.tsx';
 import Scheduler from '@/routes/Scheduler/Scheduler.tsx';
+import AddMeal from "./AddMeal/AddMeal";
 
 const router = createBrowserRouter([
     {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Meals />,
+            },
+            {
+                path: "/meals/add",
+                element: <AddMeal />,
             },
             {
                 path: "/meals",

@@ -1,15 +1,17 @@
 import { FC, useEffect, useState } from "react";
 
-// import { useAuth0 } from "@auth0/auth0-react";
 import { TMeal } from "@/types";
 import All_MEALS from "@/queries/meals/allMeals";
 import { useQuery } from "@apollo/client";
 import ViewEditMeal from "@/components/ViewEditMeal/VIewEditMeal";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router";
 
 const Meals: FC = () => {
     const [mealUpdates, setMealUpdates] = useState<TMeal[] | null>(null);
-    // const { isAuthenticated, user } = useAuth0();
     const { data, loading, error } = useQuery(All_MEALS);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (data) {
@@ -28,7 +30,7 @@ const Meals: FC = () => {
 
     return (
         <>
-            <h1 className="mt-0">Meals</h1>
+            <h1>Meals</h1>
 
             <div>
                 <div className="flex flex-col gap-[10px]">
@@ -37,6 +39,14 @@ const Meals: FC = () => {
                             <ViewEditMeal key={"meal" + index} {...meal} />
                         ))}
                 </div>
+            </div>
+
+            <div className="mt-[20px]">
+                <Button
+                    type="button"
+                    variant="outlined"
+                    onClick={() => navigate('/meals/add')}
+                >Add Meal</Button>
             </div>
         </>
     );

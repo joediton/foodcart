@@ -3,7 +3,7 @@ import { FC } from "react";
 const ShoppingList: FC = () => {
     return (
         <>
-            <h2>Shopping List</h2>
+            <h1>Shopping List</h1>
         </>
     )
 }
