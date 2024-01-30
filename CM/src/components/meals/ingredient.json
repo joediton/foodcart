@@ -18,12 +18,15 @@
     "metricUnit": {
       "type": "enumeration",
       "enum": [
+        "items",
+        "packs",
         "g",
         "kg",
         "l",
-        "ml",
-        "pack"
-      ]
+        "ml"
+      ],
+      "default": "items",
+      "required": true
     }
   }
 }

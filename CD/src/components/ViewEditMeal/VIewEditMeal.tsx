@@ -1,5 +1,5 @@
 import { TIngredient, TMeal, timingCategories } from "@/types";
-import React from 'react';
+import React, { FormEvent } from 'react';
 import {
     Accordion,
     AccordionDetails,
@@ -13,32 +13,25 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIngredient from "../EditIngredient/EditIngredient";
-// import { useMutation } from "@apollo/client";
-// import UPDATE_MEAL from "@/graphql/mutations/updateMeal";
+import { useMutation } from "@apollo/client";
+import UPDATE_MEAL from "@/graphql/mutations/updateMeal";
 
 export type TViewEditMealProps = TMeal;
 
 const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
     const [editMode, setEditMode] = React.useState<boolean>(false);
-    const [name] = React.useState<string>(props.attributes.name);
     const [timingCategory, setTimingCategory] = React.useState<string>(props.attributes.timingCategory);
     const [ingredients, setIngredients] = React.useState<TIngredient[]>(props.attributes.ingredients);
-    // const [updateMeal] = useMutation(UPDATE_MEAL, {
-    //     variables: {
-    //         id: props.id,
-    //         name,
-    //         timingCategory,
-    //         ingredients,
-    //     },
-    // });
+    const [updateMeal] = useMutation(UPDATE_MEAL, {
+        variables: {
+            id: props.id,
+            timingCategory,
+            ingredients,
+        },
+    });
 
     const handleEditButtonClick = (): void => {
         setEditMode(true);
-    }
-
-    const handleSaveButtonClick = (): void => {
-        // updateMeal();
-        setEditMode(false);
     }
 
     const handleAddIngredientButtonClick = (): void => {
@@ -56,12 +49,18 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
         setIngredients(copyOfIngredients);
     }
 
+    const handleFormSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        updateMeal();
+        setEditMode(false);
+    }
+
     return (
         <Accordion key={props.id}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
             >
-                <h2 className="my-0">{name}</h2>
+                <h2 className="my-0">{props.attributes.name}</h2>
             </AccordionSummary>
 
             <AccordionDetails>
@@ -99,11 +98,18 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                                 </table>
                             </>
                         )}
+
+                        <div className="mt-[30px]">
+                            <Button
+                                variant="outlined"
+                                onClick={handleEditButtonClick}
+                            >Edit</Button>
+                        </div>
                     </>
                 )}
 
                 {editMode && (
-                    <>
+                    <form onSubmit={handleFormSubmit}>
                         <FormControl>
                             <FormLabel
                                 id="timing-category"
@@ -120,6 +126,7 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                                                 <Radio
                                                     checked={timingCategory === category}
                                                     onChange={(e) => setTimingCategory(e.target.value)}
+                                                    required={true}
                                                 />
                                             }
                                             label={category}
@@ -146,31 +153,24 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                                 })}
                             </>
                         )}
-                    </>
+
+                        <div className="mt-[30px]">
+                            <div className="flex gap-[20px] justify-between">
+                                <Button
+                                    type="button"
+                                    variant="outlined"
+                                    onClick={handleAddIngredientButtonClick}
+                                >Add Ingredient</Button>
+
+                                <Button
+                                    type="submit"
+                                    variant="outlined"
+                                >Save</Button>
+                            </div>
+                        </div>
+                    </form>
                 )}
 
-                <div className="mt-[30px]">
-                    {editMode && (
-                        <div className="flex gap-[20px] justify-between">
-                            <Button
-                                variant="outlined"
-                                onClick={handleAddIngredientButtonClick}
-                            >Add Ingredient</Button>
-
-                            <Button
-                                variant="outlined"
-                                onClick={handleSaveButtonClick}
-                            >Save</Button>
-                        </div>
-                    )}
-
-                    {!editMode && (
-                        <Button
-                            variant="outlined"
-                            onClick={handleEditButtonClick}
-                        >Edit</Button>
-                    )}
-                </div>
             </AccordionDetails>
         </Accordion>
     );

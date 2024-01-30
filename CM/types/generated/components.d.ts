@@ -10,7 +10,11 @@ export interface MealsIngredient extends Schema.Component {
   attributes: {
     name: Attribute.String & Attribute.Required;
     quantity: Attribute.Integer;
-    metricUnit: Attribute.Enumeration<['g', 'kg', 'l', 'ml', 'pack']>;
+    metricUnit: Attribute.Enumeration<
+      ['items', 'packs', 'g', 'kg', 'l', 'ml']
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'items'>;
   };
 }
 

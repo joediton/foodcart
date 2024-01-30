@@ -4,6 +4,7 @@ const All_MEALS = gql`
   query AllMeals {
     meals {
       data {
+        id
         attributes {
           name
           timingCategory

@@ -9,7 +9,7 @@ import ViewEditMeal from "@/components/ViewEditMeal/VIewEditMeal";
 const Meals: FC = () => {
     const [mealUpdates, setMealUpdates] = useState<TMeal[] | null>(null);
     // const { isAuthenticated, user } = useAuth0();
-    const { data, loading: allMealsLoading, error: allMealsError } = useQuery(All_MEALS);
+    const { data, loading, error } = useQuery(All_MEALS);
 
     useEffect(() => {
         if (data) {
@@ -24,7 +24,7 @@ const Meals: FC = () => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, allMealsLoading, allMealsError])
+    }, [data, loading, error])
 
     return (
         <>
@@ -33,8 +33,8 @@ const Meals: FC = () => {
             <div>
                 <div className="flex flex-col gap-[10px]">
                     {(mealUpdates && mealUpdates.length > 0) &&
-                        mealUpdates.map((meal) => (
-                            <ViewEditMeal {...meal} />
+                        mealUpdates.map((meal, index) => (
+                            <ViewEditMeal key={"meal" + index} {...meal} />
                         ))}
                 </div>
             </div>

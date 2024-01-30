@@ -29,6 +29,7 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
                 value={name}
                 className="flex-1"
                 onChange={(e) => setName(e.target.value)}
+                required={true}
             />
 
             <TextField
@@ -36,12 +37,15 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
                 value={quantity}
                 className="w-[60px] text-center"
                 onChange={(e) => setQuantity(Number(e.target.value))}
+                required={true}
             />
 
             <Select
+                defaultValue={metricUnits[0]}
                 value={metricUnit}
                 className="w-[60px] text-center"
                 onChange={(e) => setMetricUnit(e.target.value)}
+                required={true}
             >
                 {metricUnits.map((unit, index) => (
                     <MenuItem value={unit} key={index}>{unit}</MenuItem>

@@ -1,22 +1,28 @@
 import { gql } from "@apollo/client";
 
 const UPDATE_MEAL = gql`
-    mutation UpdateMeal {
-      updateMeal($id: String!) {
-        data {
-          id
-          attributes {
+  mutation UpdateMeal(
+    $id: ID!
+    $timingCategory: ENUM_MEAL_TIMINGCATEGORY!
+    $ingredients: [ComponentMealsIngredientInput]!
+  ) {
+    updateMeal(
+      id: $id
+      data: { timingCategory: $timingCategory, ingredients: $ingredients }
+    ) {
+      data {
+        attributes {
+          name
+          timingCategory
+          ingredients {
             name
-            timingCategory
-            ingredients {
-              name
-              quantity
-              metricUnit
-            }
+            quantity
+            metricUnit
           }
         }
       }
     }
-  `;
+  }
+`;
 
 export default UPDATE_MEAL;

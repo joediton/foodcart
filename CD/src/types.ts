@@ -12,10 +12,11 @@ export type TDaysOfWeek = (typeof daysOfWeek)[number];
 export const timingCategories = ["quick", "normal", "slow"] as const;
 export type TTimingCategories = (typeof timingCategories)[number];
 
-export const metricUnits = ["", "g", "ml", "l", "kg", "pack", "packs"] as const;
+export const metricUnits = ["items", "packs", "g", "kg", "l", "ml"] as const;
 export type TMetricUnits = (typeof metricUnits)[number];
 
 export type TMeal = {
+  key?: string;
   id: string;
   attributes: {
     name: string;
