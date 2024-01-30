@@ -371,7 +371,7 @@ export interface ApiMealMeal extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     name: Attribute.String & Attribute.Required;
@@ -380,7 +380,6 @@ export interface ApiMealMeal extends Schema.CollectionType {
     ingredients: Attribute.Component<'meals.ingredient', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::meal.meal', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::meal.meal', 'oneToOne', 'admin::user'> &

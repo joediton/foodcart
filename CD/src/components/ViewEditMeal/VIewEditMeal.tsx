@@ -52,6 +52,15 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
         setIngredients(copyOfIngredients);
     }
 
+    const handleRemoveIngredientButtonClick = (index: number): void => {
+        const confirmed = window.confirm("Are you sure you want to delete this ingredient?");
+        if (!confirmed) return;
+
+        const copyOfIngredients = [...ingredients.slice(index, 1)];
+        console.log(copyOfIngredients);
+        // setIngredients(copyOfIngredients);
+    }
+
     const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
         updateMeal();
@@ -102,7 +111,7 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                             </>
                         )}
 
-                        <div className="mt-[30px]">
+                        <div className="mt-[30px] flex gap-[20px] justify-between">
                             <Button
                                 variant="outlined"
                                 onClick={handleEditButtonClick}
@@ -154,33 +163,41 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                             <>
                                 <h3>Ingredients</h3>
 
-                                {ingredients.map((ingredient, ii) => {
-                                    return (
-                                        <div key={props.id + ii} className="flex mt-2 gap-[10px]">
-                                            <EditIngredient
-                                                handleIngredientChange={handleIngredientChange}
-                                                index={ii}
-                                                ingredient={ingredient}
-                                            />
-                                        </div>
-                                    )
-                                })}
+                                <div className="flex flex-col gap-[30px]">
+                                    {ingredients.map((ingredient, ii) => {
+                                        return (
+                                            <div key={props.id + ii}>
+                                                <EditIngredient
+                                                    handleIngredientChange={handleIngredientChange}
+                                                    handleDeleteIngredient={handleRemoveIngredientButtonClick}
+                                                    index={ii}
+                                                    ingredient={ingredient}
+                                                />
+                                            </div>
+                                        )
+                                    })}
+                                </div>
                             </>
                         )}
 
-                        <div className="mt-[30px]">
-                            <div className="flex gap-[20px] justify-between">
-                                <Button
-                                    type="button"
-                                    variant="outlined"
-                                    onClick={handleAddIngredientButtonClick}
-                                >Add Ingredient</Button>
+                        <div className="mt-[30px] flex gap-[20px] justify-between">
+                            <Button
+                                type="button"
+                                variant="outlined"
+                                onClick={handleAddIngredientButtonClick}
+                            >Add Ingredient</Button>
+                        </div>
 
-                                <Button
-                                    type="submit"
-                                    variant="outlined"
-                                >Save</Button>
-                            </div>
+                        <div className="mt-[30px] flex gap-[20px] justify-between">
+                            <Button
+                                type="button"
+                                variant="outlined"
+                            >Delete Meal</Button>
+
+                            <Button
+                                type="submit"
+                                variant="outlined"
+                            >Save Meal</Button>
                         </div>
                     </form>
                 )}

@@ -1,9 +1,11 @@
 import React from 'react';
 import { TIngredient, metricUnits } from '@/types';
-import { MenuItem, Select, TextField } from '@mui/material';
+import { Button, MenuItem, Select, TextField } from '@mui/material';
+import { Delete } from '@mui/icons-material';
 
 export type EditIngredientProps = {
     handleIngredientChange: (ingredient: TIngredient, index: number) => void;
+    handleDeleteIngredient: (index: number) => void;
     index: number;
     ingredient: TIngredient;
 };
@@ -23,30 +25,37 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
     }, [name, quantity, metricUnit]);
 
     return (
-        <>
+        <div className="grid grid-cols-6 gap-[10px]">
             <TextField
                 label="Name"
                 type="text"
                 value={name}
-                className="flex-1"
+                className="col-span-4"
                 onChange={(e) => setName(e.target.value)}
                 required={true}
             />
+
+            <Button
+                className="col-span-2"
+                variant='outlined'
+                onClick={() => props.handleDeleteIngredient(props.index)}
+            >
+                <Delete />
+            </Button>
 
             <TextField
                 label="QTY"
                 type="text"
                 value={quantity}
-                className="w-[60px] text-center"
+                className="col-span-2 text-center"
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 required={true}
             />
 
             <Select
-                label="Metric Unit"
                 defaultValue={metricUnits[0]}
                 value={metricUnit}
-                className="w-[60px] text-center"
+                className="col-span-4 text-center"
                 onChange={(e) => setMetricUnit(e.target.value)}
                 required={true}
             >
@@ -54,7 +63,8 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
                     <MenuItem value={unit} key={index}>{unit}</MenuItem>
                 ))}
             </Select>
-        </>
+
+        </div>
     );
 };
 

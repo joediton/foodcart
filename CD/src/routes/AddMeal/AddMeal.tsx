@@ -4,11 +4,20 @@ import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Te
 import { useNavigate } from "react-router";
 import { TIngredient, timingCategories } from "@/types";
 import EditIngredient from "@/components/EditIngredient/EditIngredient";
+import { useMutation } from "@apollo/client";
+import CREATE_MEAL from "@/graphql/mutations/createMeal";
 
 const AddMeal: FC = () => {
     const [name, setName] = useState<string>("");
     const [timingCategory, setTimingCategory] = useState<string>("");
     const [ingredients, setIngredients] = useState<TIngredient[]>([]);
+    const [createMeal] = useMutation(CREATE_MEAL, {
+        variables: {
+            name,
+            timingCategory,
+            ingredients,
+        },
+    });
 
     const navigate = useNavigate();
 
@@ -29,6 +38,7 @@ const AddMeal: FC = () => {
 
     const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
+        createMeal();
         navigate('/meals');
     }
 

@@ -9,9 +9,14 @@ import { useNavigate } from "react-router";
 
 const Meals: FC = () => {
     const [mealUpdates, setMealUpdates] = useState<TMeal[] | null>(null);
-    const { data, loading, error } = useQuery(All_MEALS);
+    const { data, loading, error, refetch } = useQuery(All_MEALS);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // TODO: Only really need to refetch when the user adds a new meal
+        refetch();
+    }, [])
 
     useEffect(() => {
         if (data) {
