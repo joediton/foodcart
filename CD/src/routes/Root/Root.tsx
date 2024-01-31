@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Footer from "@/components/Footer/Footer";
-import Header from "@/components/Header/Header";
+// import Header from "@/components/Header/Header";
 
 const Root = () => {
     return (
         <>
-            <Header />
+            {/* <Header /> */}
 
-            <main className="py-8 px-4">
+            <main className="px-4 py-8">
                 <Outlet />
             </main>
 

@@ -1,22 +1,19 @@
 import { FC, useEffect, useState } from "react";
 
 import { TMeal } from "@/types";
-import All_MEALS from "@/queries/meals/allMeals";
 import { useQuery } from "@apollo/client";
 import ViewEditMeal from "@/components/ViewEditMeal/VIewEditMeal";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
+import All_MEALS from "@/graphql/queries/meals/allMeals";
 
 const Meals: FC = () => {
     const [mealUpdates, setMealUpdates] = useState<TMeal[] | null>(null);
-    const { data, loading, error, refetch } = useQuery(All_MEALS);
+    const { data, loading, error } = useQuery(All_MEALS, {
+        fetchPolicy: "no-cache" 
+    });
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        // TODO: Only really need to refetch when the user adds a new meal
-        refetch();
-    }, [])
 
     useEffect(() => {
         if (data) {

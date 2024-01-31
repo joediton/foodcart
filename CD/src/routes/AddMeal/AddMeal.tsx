@@ -74,6 +74,7 @@ const AddMeal: FC = () => {
                                             <Radio
                                                 checked={timingCategory === category}
                                                 onChange={(e) => setTimingCategory(e.target.value)}
+                                                required={true}
                                             />
                                         }
                                         label={category}

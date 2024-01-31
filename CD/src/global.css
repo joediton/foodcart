@@ -19,7 +19,7 @@
   body {
     /* Dark styles */
     @apply transition-colors dark:bg-[#333] 
-    dark:text-white pt-[var(--headerHeight)] pb-[var(--footerHeight)];
+    dark:text-white pb-[var(--footerHeight)];
   }
 
   h1,

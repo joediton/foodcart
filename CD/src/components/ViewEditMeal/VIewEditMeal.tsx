@@ -56,9 +56,8 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
         const confirmed = window.confirm("Are you sure you want to delete this ingredient?");
         if (!confirmed) return;
 
-        const copyOfIngredients = [...ingredients.slice(index, 1)];
-        console.log(copyOfIngredients);
-        // setIngredients(copyOfIngredients);
+        const copyOfIngredients = [...ingredients.filter((_,ii) => index !== ii)];
+        setIngredients(copyOfIngredients);
     }
 
     const handleFormSubmit = (e: FormEvent) => {
@@ -132,7 +131,7 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                         />
 
                         <div className="mt-[30px]">
-                            <FormControl required={true}>
+                            <FormControl>
                                 <FormLabel
                                     id="timing-category"
                                 >Timing Category</FormLabel>
@@ -149,6 +148,7 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                                                     <Radio
                                                         checked={timingCategory === category}
                                                         onChange={(e) => setTimingCategory(e.target.value)}
+                                                        required={true}
                                                     />
                                                 }
                                                 label={category}
