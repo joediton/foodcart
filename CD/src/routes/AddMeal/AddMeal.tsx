@@ -6,6 +6,7 @@ import { TIngredient, timingCategories } from "@/types";
 import EditIngredient from "@/components/EditIngredient/EditIngredient";
 import { useMutation } from "@apollo/client";
 import CREATE_MEAL from "@/graphql/mutations/createMeal";
+import All_MEALS from "@/graphql/queries/meals/allMeals";
 
 const AddMeal: FC = () => {
     const [name, setName] = useState<string>("");
@@ -17,6 +18,19 @@ const AddMeal: FC = () => {
             timingCategory,
             ingredients,
         },
+        update(cache, { data }) {
+            const newMeal = data?.createMeal.data;
+            const existingMeals = cache.readQuery({ query: All_MEALS });
+
+            cache.writeQuery({
+                query: All_MEALS,
+                data: {
+                    meals: {
+                        data: [...existingMeals.meals.data, newMeal],
+                    }
+                }
+            });
+        }
     });
 
     const navigate = useNavigate();

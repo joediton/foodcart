@@ -17,6 +17,7 @@ import EditIngredient from "../EditIngredient/EditIngredient";
 import { useMutation } from "@apollo/client";
 import UPDATE_MEAL from "@/graphql/mutations/updateMeal";
 import DELETE_MEAL from "@/graphql/mutations/deleteMeal";
+import All_MEALS from "@/graphql/queries/meals/allMeals";
 
 export type TViewEditMealProps = TMeal;
 
@@ -32,11 +33,42 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
             timingCategory,
             ingredients,
         },
+        update(cache, { data }) {
+            const updatedMeal = data?.updateMeal.data;
+            const existingMeals = cache.readQuery({ query: All_MEALS });
+
+            cache.writeQuery({
+                query: All_MEALS,
+                data: {
+                    meals: {
+                        data: existingMeals.meals.data.map((meal: TMeal) => {
+                            if (meal.id === updatedMeal.id) {
+                                return updatedMeal;
+                            }
+                            return meal;
+                        }),
+                    }
+                }
+            });
+        }
     });
     const [deleteMeal] = useMutation(DELETE_MEAL, {
         variables: {
             id: props.id,
         },
+        update(cache, { data }) {
+            const deletedMeal = data?.deleteMeal.data;
+            const existingMeals = cache.readQuery({ query: All_MEALS });
+
+            cache.writeQuery({
+                query: All_MEALS,
+                data: {
+                    meals: {
+                        data: existingMeals.meals.data.filter((meal: TMeal) => meal.id !== deletedMeal.id),
+                    }
+                }
+            });
+        }
     });
 
     const handleEditButtonClick = (): void => {
@@ -47,6 +79,7 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
         const confirmed = window.confirm("Are you sure you want to delete this meal?");
         if (!confirmed) return;
 
+        setEditMode(false);
         deleteMeal();
     }
 

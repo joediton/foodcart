@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 import { useQuery } from "@apollo/client";
 import ViewEditMeal from "@/components/ViewEditMeal/VIewEditMeal";
@@ -33,8 +33,8 @@ const Meals: FC = () => {
 
             {(meals && meals.length) && (
                 <div className="flex flex-col gap-[10px] w-full">
-                    {meals.map((meal, index) => (
-                        <ViewEditMeal {...meal} key={"meal" + index} />
+                    {meals.map((meal) => (
+                        <ViewEditMeal {...meal} key={meal.id} />
                     ))}
                 </div>
             )}
