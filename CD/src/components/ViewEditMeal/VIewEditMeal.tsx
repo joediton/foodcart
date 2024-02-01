@@ -1,4 +1,4 @@
-import { TIngredient, TMeal, timingCategories } from "@/types";
+import { TMeal, timingCategories } from "@/types";
 import React, { FormEvent } from 'react';
 import {
     Accordion,
@@ -16,14 +16,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIngredient from "../EditIngredient/EditIngredient";
 import { useMutation } from "@apollo/client";
 import UPDATE_MEAL from "@/graphql/mutations/updateMeal";
+import DELETE_MEAL from "@/graphql/mutations/deleteMeal";
 
 export type TViewEditMealProps = TMeal;
 
 const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
-    const [editMode, setEditMode] = React.useState<boolean>(props.editMode);
-    const [name, setName] = React.useState<string>(props.attributes.name);
-    const [timingCategory, setTimingCategory] = React.useState<string>(props.attributes.timingCategory);
-    const [ingredients, setIngredients] = React.useState<TIngredient[]>(props.attributes.ingredients);
+    const [editMode, setEditMode] = React.useState(props.editMode);
+    const [name, setName] = React.useState(props.attributes.name);
+    const [timingCategory, setTimingCategory] = React.useState(props.attributes.timingCategory);
+    const [ingredients, setIngredients] = React.useState(props.attributes.ingredients);
     const [updateMeal] = useMutation(UPDATE_MEAL, {
         variables: {
             id: props.id,
@@ -32,31 +33,49 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
             ingredients,
         },
     });
+    const [deleteMeal] = useMutation(DELETE_MEAL, {
+        variables: {
+            id: props.id,
+        },
+    });
 
     const handleEditButtonClick = (): void => {
         setEditMode(true);
     }
 
+    const handleDeleteMealButtonClick = (): void => {
+        const confirmed = window.confirm("Are you sure you want to delete this meal?");
+        if (!confirmed) return;
+
+        deleteMeal();
+    }
+
     const handleAddIngredientButtonClick = (): void => {
-        const newIngredient: TIngredient = {
+        setIngredients([...ingredients, {
             name: "",
             quantity: 0,
             metricUnit: "",
-        }
-        setIngredients([...ingredients, newIngredient]);
+        }]);
     }
 
-    const handleIngredientChange = (ingredient: TIngredient, index: number): void => {
-        const copyOfIngredients = [...ingredients];
-        copyOfIngredients[index] = ingredient;
-        setIngredients(copyOfIngredients);
+    const handleIngredientFieldChange = (targetIndex: number, key: string, value: string): void => {
+        setIngredients([...ingredients].map((ingredient, index) => {
+            if (targetIndex === index) {
+                return {
+                    ...ingredient,
+                    [key]: key === "quantity" ? parseInt(value) : value,
+                }
+            }
+            return ingredient;
+        }));
     }
 
-    const handleRemoveIngredientButtonClick = (index: number): void => {
+    const handleDeleteIngredientButtonClick = (index: number): void => {
         const confirmed = window.confirm("Are you sure you want to delete this ingredient?");
         if (!confirmed) return;
 
-        const copyOfIngredients = [...ingredients.filter((_,ii) => index !== ii)];
+        const copyOfIngredients = [...ingredients];
+        copyOfIngredients.splice(index, 1);
         setIngredients(copyOfIngredients);
     }
 
@@ -76,17 +95,17 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
 
             <AccordionDetails>
                 {!editMode && (
-                    <>
-                        <div className="flex items-center gap-[30px]">
-                            <h3 className="h4 my-0">Timing Category:</h3>
-                            <p className="h4 my-0 font-normal">{timingCategory}</p>
+                    <div className="flex flex-col gap-[30px] items-start">
+                        <div className="flex items-center gap-[30px] w-full">
+                            <h3 className="h4">Timing Category:</h3>
+                            <p className="h4 font-normal">{timingCategory}</p>
                         </div>
 
                         {ingredients.length > 0 && (
                             <>
                                 <h3>Ingredients</h3>
 
-                                <table className="w-full">
+                                <table className="w-full -mt-[15px]">
                                     <thead>
                                         <tr>
                                             <th className="text-left">Name</th>
@@ -110,18 +129,17 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                             </>
                         )}
 
-                        <div className="mt-[30px] flex gap-[20px] justify-between">
-                            <Button
-                                variant="outlined"
-                                onClick={handleEditButtonClick}
-                            >Edit</Button>
-                        </div>
-                    </>
+                        <Button
+                            variant="outlined"
+                            onClick={handleEditButtonClick}
+                        >Edit</Button>
+                    </div>
                 )}
 
                 {editMode && (
-                    <form onSubmit={handleFormSubmit}>
+                    <form onSubmit={handleFormSubmit} className="flex flex-col gap-[30px]">
                         <TextField
+                            size="small"
                             label="Name"
                             type="text"
                             value={name}
@@ -130,34 +148,32 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                             required={true}
                         />
 
-                        <div className="mt-[30px]">
-                            <FormControl>
-                                <FormLabel
-                                    id="timing-category"
-                                >Timing Category</FormLabel>
+                        <FormControl size="small">
+                            <FormLabel
+                                id="timing-category"
+                            >Timing Category</FormLabel>
 
-                                <RadioGroup
-                                    row
-                                    aria-labelledby="timing-category"
-                                >
-                                    {timingCategories.map((category, index) => (
-                                        <span key={index}>
-                                            <FormControlLabel
-                                                value={category}
-                                                control={
-                                                    <Radio
-                                                        checked={timingCategory === category}
-                                                        onChange={(e) => setTimingCategory(e.target.value)}
-                                                        required={true}
-                                                    />
-                                                }
-                                                label={category}
-                                            />
-                                        </span>
-                                    ))}
-                                </RadioGroup>
-                            </FormControl>
-                        </div>
+                            <RadioGroup
+                                row
+                                aria-labelledby="timing-category"
+                            >
+                                {timingCategories.map((category, index) => (
+                                    <span key={index}>
+                                        <FormControlLabel
+                                            value={category}
+                                            control={
+                                                <Radio
+                                                    checked={timingCategory === category}
+                                                    onChange={(e) => setTimingCategory(e.target.value)}
+                                                    required={true}
+                                                />
+                                            }
+                                            label={category}
+                                        />
+                                    </span>
+                                ))}
+                            </RadioGroup>
+                        </FormControl>
 
                         {ingredients.length > 0 && (
                             <>
@@ -168,8 +184,8 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                                         return (
                                             <div key={props.id + ii}>
                                                 <EditIngredient
-                                                    handleIngredientChange={handleIngredientChange}
-                                                    handleDeleteIngredient={handleRemoveIngredientButtonClick}
+                                                    handleIngredientFieldChange={handleIngredientFieldChange}
+                                                    handleDeleteIngredientButtonClick={handleDeleteIngredientButtonClick}
                                                     index={ii}
                                                     ingredient={ingredient}
                                                 />
@@ -180,18 +196,17 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                             </>
                         )}
 
-                        <div className="mt-[30px] flex gap-[20px] justify-between">
-                            <Button
-                                type="button"
-                                variant="outlined"
-                                onClick={handleAddIngredientButtonClick}
-                            >Add Ingredient</Button>
-                        </div>
+                        <Button
+                            type="button"
+                            variant="outlined"
+                            onClick={handleAddIngredientButtonClick}
+                        >Add Ingredient</Button>
 
-                        <div className="mt-[30px] flex gap-[20px] justify-between">
+                        <div className="flex gap-[20px] justify-between">
                             <Button
                                 type="button"
                                 variant="outlined"
+                                onClick={handleDeleteMealButtonClick}
                             >Delete Meal</Button>
 
                             <Button
@@ -201,7 +216,6 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                         </div>
                     </form>
                 )}
-
             </AccordionDetails>
         </Accordion>
     );

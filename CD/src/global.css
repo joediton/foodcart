@@ -13,13 +13,11 @@
       --gutterWidth: 40px;
     }
 
-    @apply font-sans leading-6;
+    @apply font-sans text-base leading-6;
   }
 
   body {
-    /* Dark styles */
-    @apply transition-colors dark:bg-[#333] 
-    dark:text-white pb-[var(--footerHeight)];
+    @apply bg-[#333] text-white pb-[var(--footerHeight)];
   }
 
   h1,
@@ -53,32 +51,13 @@
   }
 
   p {
-    @apply mb-4;
+    @apply my-0;
   }
-
-  ul {
-    @apply list list-disc;
-  }
-
-  ol {
-    @apply list list-decimal;
-  }
-
-  /* input,
-  textarea,
-  select {
-    @apply w-full py-1 px-2 rounded-md bg-[#eee] border border-[#ccc] 
-    dark:bg-[#111] dark:border-[#222] dark:text-white;
-  } */
 }
 
 @layer utilities {
   .heading {
-    @apply font-bold leading-tight mt-8 mb-5;
-  }
-
-  .list {
-    @apply mb-4 pl-4;
+    @apply font-bold leading-tight my-0;
   }
 
   .container {
@@ -88,9 +67,5 @@
 
   .base-grid {
     @apply grid grid-cols-12 gap-[var(--gutterWidth)];
-
-    > * {
-      @apply flex flex-col;
-    }
   }
 }

@@ -1,12 +1,12 @@
 module.exports = ({ env }) => {
   return {
     connection: {
-      client: env('DATABASE_CLIENT'),
+      client: env('DATABASE_CLIENT', 'postgres'),
       connection: {
-        host: env('DATABASE_HOST'),
-        port: env.int('DATABASE_PORT'),
-        database: env('DATABASE_NAME'),
-        user: env('DATABASE_USERNAME'),
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', '5432'),
+        database: env('DATABASE_NAME', 'foodcart'),
+        user: env('DATABASE_USERNAME', 'postgres'),
         password: env('DATABASE_PASSWORD'),
         ssl: env.bool('DATABASE_SSL', false) && {
           key: env('DATABASE_SSL_KEY', undefined),

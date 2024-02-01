@@ -15,6 +15,15 @@ const CREATE_MEAL = gql`
     ) {
       data {
         id
+        attributes {
+          name
+          timingCategory
+          ingredients {
+            name
+            quantity
+            metricUnit
+          }
+        }
       }
     }
   }

@@ -4,60 +4,63 @@ import { Button, MenuItem, Select, TextField } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
 export type EditIngredientProps = {
-    handleIngredientChange: (ingredient: TIngredient, index: number) => void;
-    handleDeleteIngredient: (index: number) => void;
+    handleIngredientFieldChange: (targetIndex: number, key: string, value: string) => void;
+    handleDeleteIngredientButtonClick: (index: number) => void;
     index: number;
     ingredient: TIngredient;
 };
 
 const EditIngredient: React.FC<EditIngredientProps> = (props) => {
-    const [name, setName] = React.useState<string>(props.ingredient.name);
-    const [quantity, setQuantity] = React.useState<number | undefined>(props.ingredient.quantity);
-    const [metricUnit, setMetricUnit] = React.useState<string | undefined>(props.ingredient.metricUnit);
 
-    React.useEffect(() => {
-        props.handleIngredientChange({
-            name,
-            quantity,
-            metricUnit,
-        }, props.index);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [name, quantity, metricUnit]);
+    const handleFieldChange = (e): void => {
+        const { name, value } = e.target;
+        props.handleIngredientFieldChange(props.index, name, value);
+    }
+
+    const handleDeleteButtonClick = (): void => {
+        props.handleDeleteIngredientButtonClick(props.index);
+    }
 
     return (
         <div className="grid grid-cols-6 gap-[10px]">
             <TextField
+                size="small"
                 label="Name"
                 type="text"
-                value={name}
+                value={props.ingredient.name}
                 className="col-span-4"
-                onChange={(e) => setName(e.target.value)}
+                onChange={handleFieldChange}
                 required={true}
+                name="name"
             />
 
             <Button
                 className="col-span-2"
                 variant='outlined'
-                onClick={() => props.handleDeleteIngredient(props.index)}
+                onClick={handleDeleteButtonClick}
             >
                 <Delete />
             </Button>
 
             <TextField
+                size="small"
                 label="QTY"
-                type="text"
-                value={quantity}
+                type="number"
+                value={props.ingredient.quantity}
                 className="col-span-2 text-center"
-                onChange={(e) => setQuantity(Number(e.target.value))}
+                onChange={handleFieldChange}
                 required={true}
+                name="quantity"
             />
 
             <Select
+                size="small"
                 defaultValue={metricUnits[0]}
-                value={metricUnit}
+                value={props.ingredient.metricUnit}
                 className="col-span-4 text-center"
-                onChange={(e) => setMetricUnit(e.target.value)}
+                onChange={handleFieldChange}
                 required={true}
+                name="metricUnit"
             >
                 {metricUnits.map((unit, index) => (
                     <MenuItem value={unit} key={index}>{unit}</MenuItem>

@@ -16,6 +16,7 @@ const UPDATE_MEAL = gql`
       }
     ) {
       data {
+        id
         attributes {
           name
           timingCategory

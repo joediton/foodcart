@@ -1,55 +1,51 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 
-import { TMeal } from "@/types";
 import { useQuery } from "@apollo/client";
 import ViewEditMeal from "@/components/ViewEditMeal/VIewEditMeal";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import All_MEALS from "@/graphql/queries/meals/allMeals";
+import { TMeal } from "@/types";
+
+type TQueryData = {
+    meals: {
+        data: TMeal[];
+    }
+} | null;
 
 const Meals: FC = () => {
-    const [mealUpdates, setMealUpdates] = useState<TMeal[] | null>(null);
-    const { data, loading, error } = useQuery(All_MEALS, {
-        fetchPolicy: "no-cache" 
-    });
+    const { data, loading, error } = useQuery<TQueryData>(All_MEALS);
+    const meals = data?.meals.data;
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (data) {
-            const copyOfMeals = [...data.meals.data].map((meal) => {
-                return {
-                    ...meal,
-                    editMode: false,
-                }
-            })
-
-            setMealUpdates(copyOfMeals);
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, loading, error])
 
     return (
         <>
             <h1>Meals</h1>
 
-            <div>
-                <div className="flex flex-col gap-[10px]">
-                    {(mealUpdates && mealUpdates.length > 0) &&
-                        mealUpdates.map((meal, index) => (
-                            <ViewEditMeal key={"meal" + index} {...meal} />
-                        ))}
-                </div>
-            </div>
+            {loading && (
+                <p>Loading...</p>
+            )}
 
-            <div className="mt-[20px]">
+            {error && (
+                <p>Error: ${error.message}</p>
+            )}
+
+            {(meals && meals.length) && (
+                <div className="flex flex-col gap-[10px] w-full">
+                    {meals.map((meal, index) => (
+                        <ViewEditMeal {...meal} key={"meal" + index} />
+                    ))}
+                </div>
+            )}
+
+            {data && (
                 <Button
                     type="button"
                     variant="outlined"
                     onClick={() => navigate('/meals/add')}
                 >Add Meal</Button>
-            </div>
+            )}
         </>
     );
 }

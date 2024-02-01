@@ -21,19 +21,33 @@ const AddMeal: FC = () => {
 
     const navigate = useNavigate();
 
-    const handleIngredientChange = (ingredient: TIngredient, index: number): void => {
-        const copyOfIngredients = [...ingredients];
-        copyOfIngredients[index] = ingredient;
-        setIngredients(copyOfIngredients);
-    }
-
     const handleAddIngredientButtonClick = (): void => {
-        const newIngredient: TIngredient = {
+        setIngredients([...ingredients, {
             name: "",
             quantity: 0,
             metricUnit: "",
-        }
-        setIngredients([...ingredients, newIngredient]);
+        }]);
+    }
+
+    const handleIngredientFieldChange = (targetIndex: number, key: string, value: string): void => {
+        setIngredients([...ingredients].map((ingredient, index) => {
+            if (targetIndex === index) {
+                return {
+                    ...ingredient,
+                    [key]: key === "quantity" ? parseInt(value) : value,
+                }
+            }
+            return ingredient;
+        }));
+    }
+
+    const handleDeleteIngredientButtonClick = (index: number): void => {
+        const confirmed = window.confirm("Are you sure you want to delete this ingredient?");
+        if (!confirmed) return;
+
+        const copyOfIngredients = [...ingredients];
+        copyOfIngredients.splice(index, 1);
+        setIngredients(copyOfIngredients);
     }
 
     const handleFormSubmit = (e: FormEvent) => {
@@ -46,7 +60,7 @@ const AddMeal: FC = () => {
         <>
             <h1>Add Meal</h1>
 
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={handleFormSubmit} className="flex flex-col gap-[30px]">
                 <TextField
                     label="Name"
                     type="text"
@@ -56,69 +70,65 @@ const AddMeal: FC = () => {
                     required={true}
                 />
 
-                <div className="mt-[30px]">
-                    <FormControl required={true}>
-                        <FormLabel
-                            id="timing-category"
-                        >Timing Category</FormLabel>
+                <FormControl required={true}>
+                    <FormLabel
+                        id="timing-category"
+                    >Timing Category</FormLabel>
 
-                        <RadioGroup
-                            row
-                            aria-labelledby="timing-category"
-                        >
-                            {timingCategories.map((category, index) => (
-                                <span key={index}>
-                                    <FormControlLabel
-                                        value={category}
-                                        control={
-                                            <Radio
-                                                checked={timingCategory === category}
-                                                onChange={(e) => setTimingCategory(e.target.value)}
-                                                required={true}
-                                            />
-                                        }
-                                        label={category}
-                                    />
-                                </span>
-                            ))}
-                        </RadioGroup>
-                    </FormControl>
-                </div>
+                    <RadioGroup
+                        row
+                        aria-labelledby="timing-category"
+                    >
+                        {timingCategories.map((category, index) => (
+                            <span key={index}>
+                                <FormControlLabel
+                                    value={category}
+                                    control={
+                                        <Radio
+                                            checked={timingCategory === category}
+                                            onChange={(e) => setTimingCategory(e.target.value)}
+                                            required={true}
+                                        />
+                                    }
+                                    label={category}
+                                />
+                            </span>
+                        ))}
+                    </RadioGroup>
+                </FormControl>
 
                 {ingredients.length > 0 && (
-                    <>
+                    <div className="flex flex-col gap-[30px]">
                         <h3>Ingredients</h3>
 
                         {ingredients.map((ingredient, ii) => {
                             return (
-                                <div key={"ingredient" + ii} className="flex mt-2 gap-[10px]">
+                                <div key={"ingredient" + ii} className="flex gap-[10px]">
                                     <EditIngredient
-                                        handleIngredientChange={handleIngredientChange}
+                                        handleDeleteIngredientButtonClick={handleDeleteIngredientButtonClick}
+                                        handleIngredientFieldChange={handleIngredientFieldChange}
                                         index={ii}
                                         ingredient={ingredient}
                                     />
                                 </div>
                             )
                         })}
-                    </>
+                    </div>
                 )}
 
-                <div className="mt-[30px]">
-                    <div className="flex gap-[20px] justify-between">
-                        <Button
-                            type="button"
-                            variant="outlined"
-                            onClick={handleAddIngredientButtonClick}
-                        >Add Ingredient</Button>
+                <div className="flex gap-[20px] justify-between">
+                    <Button
+                        type="button"
+                        variant="outlined"
+                        onClick={handleAddIngredientButtonClick}
+                    >Add Ingredient</Button>
 
-                        <Button
-                            type="submit"
-                            variant="outlined"
-                        >Save</Button>
-                    </div>
+                    <Button
+                        type="submit"
+                        variant="outlined"
+                    >Save</Button>
                 </div>
             </form>
-
         </>
     );
 }

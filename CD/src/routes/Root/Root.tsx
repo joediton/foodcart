@@ -7,7 +7,7 @@ const Root = () => {
         <>
             {/* <Header /> */}
 
-            <main className="px-4 py-8">
+            <main className="flex flex-col gap-[30px] items-start my-8 mx-4">
                 <Outlet />
             </main>
 
