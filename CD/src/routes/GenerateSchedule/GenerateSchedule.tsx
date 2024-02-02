@@ -1,7 +1,6 @@
 import { FC, FormEvent, useState } from "react";
 import { daysOfWeek, timingCategories } from "@/types";
 import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import Root from "../Root/Root";
 import RootHeader from "@/components/RootHeader/RootHeader";
 
 const GenerateSchedule: FC = () => {
