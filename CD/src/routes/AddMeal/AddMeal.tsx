@@ -2,7 +2,7 @@ import { FC, FormEvent, useState } from "react";
 
 import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { useNavigate } from "react-router";
-import { TIngredient, timingCategories } from "@/types";
+import { TIngredient, TMealsQueryResponse, timingCategories } from "@/types";
 import EditIngredient from "@/components/EditIngredient/EditIngredient";
 import { useMutation } from "@apollo/client";
 import CREATE_MEAL from "@/graphql/mutations/createMeal";
@@ -20,13 +20,13 @@ const AddMeal: FC = () => {
         },
         update(cache, { data }) {
             const newMeal = data?.createMeal.data;
-            const existingMeals = cache.readQuery({ query: All_MEALS });
+            const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS });
 
             cache.writeQuery({
                 query: All_MEALS,
                 data: {
                     meals: {
-                        data: [...existingMeals.meals.data, newMeal],
+                        data: [existingMeals?.meals.data, newMeal],
                     }
                 }
             });

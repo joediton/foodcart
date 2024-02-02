@@ -1,4 +1,4 @@
-import { TMeal, timingCategories } from "@/types";
+import { TMeal, TMealsQueryResponse, timingCategories } from "@/types";
 import React, { FormEvent } from 'react';
 import {
     Accordion,
@@ -35,13 +35,13 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
         },
         update(cache, { data }) {
             const updatedMeal = data?.updateMeal.data;
-            const existingMeals = cache.readQuery({ query: All_MEALS });
+            const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS });
 
             cache.writeQuery({
                 query: All_MEALS,
                 data: {
                     meals: {
-                        data: existingMeals.meals.data.map((meal: TMeal) => {
+                        data: existingMeals?.meals.data.map((meal: TMeal) => {
                             if (meal.id === updatedMeal.id) {
                                 return updatedMeal;
                             }
@@ -58,13 +58,13 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
         },
         update(cache, { data }) {
             const deletedMeal = data?.deleteMeal.data;
-            const existingMeals = cache.readQuery({ query: All_MEALS });
+            const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS });
 
             cache.writeQuery({
                 query: All_MEALS,
                 data: {
                     meals: {
-                        data: existingMeals.meals.data.filter((meal: TMeal) => meal.id !== deletedMeal.id),
+                        data: existingMeals?.meals.data.filter((meal: TMeal) => meal.id !== deletedMeal.id),
                     }
                 }
             });

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { TIngredient, metricUnits } from '@/types';
-import { Button, MenuItem, Select, TextField } from '@mui/material';
+import { Button, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
 export type EditIngredientProps = {
@@ -11,8 +11,12 @@ export type EditIngredientProps = {
 };
 
 const EditIngredient: React.FC<EditIngredientProps> = (props) => {
+    const handleTextFieldChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        const { name, value } = e.target;
+        props.handleIngredientFieldChange(props.index, name, value);
+    }
 
-    const handleFieldChange = (e): void => {
+    const handleSelectChange = (e: SelectChangeEvent<string>): void => {
         const { name, value } = e.target;
         props.handleIngredientFieldChange(props.index, name, value);
     }
@@ -29,7 +33,7 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
                 type="text"
                 value={props.ingredient.name}
                 className="col-span-4"
-                onChange={handleFieldChange}
+                onChange={handleTextFieldChange}
                 required={true}
                 name="name"
             />
@@ -48,7 +52,7 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
                 type="number"
                 value={props.ingredient.quantity}
                 className="col-span-2 text-center"
-                onChange={handleFieldChange}
+                onChange={handleTextFieldChange}
                 required={true}
                 name="quantity"
             />
@@ -58,7 +62,7 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
                 defaultValue={metricUnits[0]}
                 value={props.ingredient.metricUnit}
                 className="col-span-4 text-center"
-                onChange={handleFieldChange}
+                onChange={handleSelectChange}
                 required={true}
                 name="metricUnit"
             >
@@ -66,7 +70,6 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
                     <MenuItem value={unit} key={index}>{unit}</MenuItem>
                 ))}
             </Select>
-
         </div>
     );
 };

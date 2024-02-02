@@ -31,3 +31,9 @@ export type TIngredient = {
   quantity?: number;
   metricUnit?: string;
 };
+
+export type TMealsQueryResponse = {
+  meals: {
+    data: TMeal[];
+  };
+} | null;
