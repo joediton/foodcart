@@ -7,10 +7,11 @@ import EditIngredient from "@/components/EditIngredient/EditIngredient";
 import { useMutation } from "@apollo/client";
 import CREATE_MEAL from "@/graphql/mutations/createMeal";
 import All_MEALS from "@/graphql/queries/meals/allMeals";
+import RootHeader from "@/components/RootHeader/RootHeader";
 
 const AddMeal: FC = () => {
-    const [name, setName] = useState<string>("");
-    const [timingCategory, setTimingCategory] = useState<string>("");
+    const [name, setName] = useState("");
+    const [timingCategory, setTimingCategory] = useState("");
     const [ingredients, setIngredients] = useState<TIngredient[]>([]);
     const [createMeal] = useMutation(CREATE_MEAL, {
         variables: {
@@ -21,12 +22,13 @@ const AddMeal: FC = () => {
         update(cache, { data }) {
             const newMeal = data?.createMeal.data;
             const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS });
+            if (!newMeal || !existingMeals) return;
 
             cache.writeQuery({
                 query: All_MEALS,
                 data: {
                     meals: {
-                        data: [existingMeals?.meals.data, newMeal],
+                        data: [...existingMeals.meals.data, newMeal],
                     }
                 }
             });
@@ -71,10 +73,17 @@ const AddMeal: FC = () => {
     }
 
     return (
-        <>
-            <h1>Add Meal</h1>
+        <form onSubmit={handleFormSubmit}>
+            <RootHeader>
+                <h1>Add Meal</h1>
 
-            <form onSubmit={handleFormSubmit} className="flex flex-col gap-[30px]">
+                <Button
+                    type="submit"
+                    variant="outlined"
+                >Save</Button>
+            </RootHeader>
+
+            <div className="flex flex-col gap-[30px] w-full">
                 <TextField
                     label="Name"
                     type="text"
@@ -130,20 +139,13 @@ const AddMeal: FC = () => {
                     </div>
                 )}
 
-                <div className="flex gap-[20px] justify-between">
-                    <Button
-                        type="button"
-                        variant="outlined"
-                        onClick={handleAddIngredientButtonClick}
-                    >Add Ingredient</Button>
-
-                    <Button
-                        type="submit"
-                        variant="outlined"
-                    >Save</Button>
-                </div>
-            </form>
-        </>
+                <Button
+                    type="button"
+                    variant="outlined"
+                    onClick={handleAddIngredientButtonClick}
+                >Add Ingredient</Button>
+            </div>
+        </form>
     );
 }
 

@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "schedules",
+  "info": {
+    "singularName": "schedule",
+    "pluralName": "schedules",
+    "displayName": "Schedule",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "monday": {
+      "displayName": "Schedule Item",
+      "type": "component",
+      "repeatable": false,
+      "component": "schedule.schedule-item"
+    },
+    "tuesday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "schedule.schedule-item"
+    },
+    "wednesday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "schedule.schedule-item"
+    },
+    "thursday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "schedule.schedule-item"
+    },
+    "friday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "schedule.schedule-item"
+    },
+    "saturday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "schedule.schedule-item"
+    },
+    "sunday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "schedule.schedule-item"
+    }
+  }
+}

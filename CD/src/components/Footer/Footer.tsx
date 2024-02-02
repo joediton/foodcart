@@ -12,7 +12,7 @@ const Footer: FC = () => {
                 showLabels
             >
                 <BottomNavigationAction component={Link} to="/meals" label="Meals" icon={<RestaurantIcon />} />
-                <BottomNavigationAction component={Link} to="/scheduler" label="Scheduler" icon={<CalendarMonthIcon />} />
+                <BottomNavigationAction component={Link} to="/schedules" label="Schedules" icon={<CalendarMonthIcon />} />
                 <BottomNavigationAction component={Link} to="/shopping-list" label="Shopping List" icon={<ChecklistRtlIcon />} />
             </BottomNavigation>
         </footer>

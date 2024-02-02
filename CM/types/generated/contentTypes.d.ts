@@ -387,6 +387,42 @@ export interface ApiMealMeal extends Schema.CollectionType {
   };
 }
 
+export interface ApiScheduleSchedule extends Schema.CollectionType {
+  collectionName: 'schedules';
+  info: {
+    singularName: 'schedule';
+    pluralName: 'schedules';
+    displayName: 'Schedule';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    monday: Attribute.Component<'schedule.schedule-item'>;
+    tuesday: Attribute.Component<'schedule.schedule-item'>;
+    wednesday: Attribute.Component<'schedule.schedule-item'>;
+    thursday: Attribute.Component<'schedule.schedule-item'>;
+    friday: Attribute.Component<'schedule.schedule-item'>;
+    saturday: Attribute.Component<'schedule.schedule-item'>;
+    sunday: Attribute.Component<'schedule.schedule-item'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::schedule.schedule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::schedule.schedule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -817,6 +853,7 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::meal.meal': ApiMealMeal;
+      'api::schedule.schedule': ApiScheduleSchedule;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;

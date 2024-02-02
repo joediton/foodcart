@@ -23,7 +23,6 @@ export type TMeal = {
     timingCategory: string;
     ingredients: TIngredient[];
   };
-  editMode: boolean;
 };
 
 export type TIngredient = {
@@ -35,5 +34,21 @@ export type TIngredient = {
 export type TMealsQueryResponse = {
   meals: {
     data: TMeal[];
+  };
+} | null;
+
+export type TSchedule = {
+  key?: string;
+  id: string;
+  attributes: {
+    name: string;
+    timingCategory: string;
+    ingredients: TIngredient[];
+  };
+};
+
+export type TSchedulesQueryResponse = {
+  schedules: {
+    data: TSchedule[];
   };
 } | null;

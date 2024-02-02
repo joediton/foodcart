@@ -1,9 +1,12 @@
+import RootHeader from "@/components/RootHeader/RootHeader";
 import { FC } from "react";
 
 const ShoppingList: FC = () => {
     return (
         <>
-            <h1>Shopping List</h1>
+            <RootHeader>
+                <h1>Shopping List</h1>
+            </RootHeader>
         </>
     )
 }

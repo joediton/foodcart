@@ -6,8 +6,9 @@ import Root from '@/routes/Root/Root.tsx';
 import Error from '@/routes/Error/Error.tsx';
 import Meals from '@/routes/Meals/Meals.tsx';
 import ShoppingList from '@/routes/ShoppingList/ShoppingList.tsx';
-import Scheduler from '@/routes/Scheduler/Scheduler.tsx';
 import AddMeal from "./AddMeal/AddMeal";
+import Schedules from "@/routes/Schedules/Schedules";
+import GenerateSchedule from "./GenerateSchedule/GenerateSchedule";
 
 const router = createBrowserRouter([
     {
@@ -28,8 +29,12 @@ const router = createBrowserRouter([
                 element: <Meals />,
             },
             {
-                path: "/scheduler",
-                element: <Scheduler />,
+                path: "/schedules/generate",
+                element: <GenerateSchedule />,
+            },
+            {
+                path: "/schedules",
+                element: <Schedules />,
             },
             {
                 path: "/shopping-list",

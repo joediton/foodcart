@@ -1,8 +1,10 @@
 import { FC, FormEvent, useState } from "react";
 import { daysOfWeek, timingCategories } from "@/types";
 import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import Root from "../Root/Root";
+import RootHeader from "@/components/RootHeader/RootHeader";
 
-const Scheduler: FC = () => {
+const GenerateSchedule: FC = () => {
     const [selectedMeals, setSelectedMeals] = useState<{ [day: string]: string }>({});
 
     const handleMealOptionsSelectChange = (event: SelectChangeEvent<string>) => {
@@ -15,28 +17,41 @@ const Scheduler: FC = () => {
     };
 
     return (
-        <>
-            <h1>Scheduler</h1>
+        <form onSubmit={handleFormSubmit}>
+            <RootHeader>
+                <h1>Add Schedule</h1>
 
-            <form onSubmit={handleFormSubmit} className=" w-full">
+                <Button
+                    variant="outlined"
+                    type="submit"
+                >
+                    Generate
+                </Button>
+            </RootHeader>
+
+            <div className="flex flex-col gap-[10px] w-full">
                 <div className="flex flex-col gap-[10px]">
-                    <div className='flex items-center pb-4'>
-                        <div className="w-1/3">
-                            <h3 className="m-0">Day</h3>
+                    <div className='grid grid-cols-3 gap-[20px] items-center pb-2'>
+                        <div className="col-span-1">
+                            <p className="font-bold m-0">Day</p>
                         </div>
 
-                        <div className="w-2/3">
-                            <h3 className="m-0">Timing Category</h3>
+                        <div className="col-span-1">
+                            <p className="font-bold m-0">Timing</p>
+                        </div>
+
+                        <div className="col-span-1">
+                            <p className="font-bold m-0">Meal</p>
                         </div>
                     </div>
 
                     {daysOfWeek.map((day) => (
-                        <div className='flex items-center' key={day}>
-                            <div className="w-1/3">
+                        <div className='grid grid-cols-3 gap-[20px] items-center' key={day}>
+                            <div className="col-span-1">
                                 <label className="m-0 p-0" htmlFor={day.toLowerCase()}>{day}</label>
                             </div>
 
-                            <div className="w-2/3">
+                            <div className="col-span-1">
                                 <Select
                                     size="small"
                                     id={day.toLowerCase()}
@@ -53,22 +68,16 @@ const Scheduler: FC = () => {
                                     ))}
                                 </Select>
                             </div>
+
+                            <div className="col-span-1">
+                                <p className="m-0">?</p>
+                            </div>
                         </div>
                     ))}
                 </div>
-
-                <div className="mt-[30px]">
-                    <Button
-                        variant="outlined"
-                        type="submit"
-                    >
-                        Generate
-                    </Button>
-                </div>
-            </form>
-
-        </>
+            </div>
+        </form>
     )
 }
 
-export default Scheduler;
+export default GenerateSchedule;

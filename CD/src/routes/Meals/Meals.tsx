@@ -1,51 +1,53 @@
 import { FC } from "react";
-
 import { useQuery } from "@apollo/client";
 import ViewEditMeal from "@/components/ViewEditMeal/VIewEditMeal";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import All_MEALS from "@/graphql/queries/meals/allMeals";
-import { TMeal } from "@/types";
-
-type TQueryData = {
-    meals: {
-        data: TMeal[];
-    }
-} | null;
+import { TMealsQueryResponse } from "@/types";
+import RootHeader from "@/components/RootHeader/RootHeader";
 
 const Meals: FC = () => {
-    const { data, loading, error } = useQuery<TQueryData>(All_MEALS);
+    const { data, loading, error } = useQuery<TMealsQueryResponse>(All_MEALS);
     const meals = data?.meals.data;
 
     const navigate = useNavigate();
 
     return (
         <>
-            <h1>Meals</h1>
+            <RootHeader>
+                <h1>Meals</h1>
 
-            {loading && (
-                <p>Loading...</p>
-            )}
+                {data && (
+                    <Button
+                        type="button"
+                        variant="outlined"
+                        onClick={() => navigate('/meals/add')}
+                    >Add Meal</Button>
+                )}
+            </RootHeader>
 
-            {error && (
-                <p>Error: ${error.message}</p>
-            )}
+            <div className="flex flex-col gap-[30px] items-start ">
+                {loading && (
+                    <p>Loading...</p>
+                )}
 
-            {(meals && meals.length) && (
-                <div className="flex flex-col gap-[10px] w-full">
-                    {meals.map((meal) => (
-                        <ViewEditMeal {...meal} key={meal.id} />
-                    ))}
-                </div>
-            )}
+                {error && (
+                    <p>Error: ${error.message}</p>
+                )}
 
-            {data && (
-                <Button
-                    type="button"
-                    variant="outlined"
-                    onClick={() => navigate('/meals/add')}
-                >Add Meal</Button>
-            )}
+                {(meals && meals.length > 0) && (
+                    <div className="flex flex-col gap-[10px] w-full">
+                        {meals.map((meal) => (
+                            <ViewEditMeal {...meal} key={meal.id} />
+                        ))}
+                    </div>
+                )}
+
+                {(!meals || meals.length === 0) && (
+                    <p className="text-center my-10">No meals found</p>
+                )}
+            </div>
         </>
     );
 }

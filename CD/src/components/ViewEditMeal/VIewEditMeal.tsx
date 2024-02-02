@@ -22,10 +22,10 @@ import All_MEALS from "@/graphql/queries/meals/allMeals";
 export type TViewEditMealProps = TMeal;
 
 const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
-    const [editMode, setEditMode] = React.useState(props.editMode);
-    const [name, setName] = React.useState(props.attributes.name);
-    const [timingCategory, setTimingCategory] = React.useState(props.attributes.timingCategory);
-    const [ingredients, setIngredients] = React.useState(props.attributes.ingredients);
+    const [editMode, setEditMode] = React.useState(false);
+    const [name, setName] = React.useState(props.attributes.name || "");
+    const [timingCategory, setTimingCategory] = React.useState(props.attributes.timingCategory || "");
+    const [ingredients, setIngredients] = React.useState(props.attributes.ingredients || []);
     const [updateMeal] = useMutation(UPDATE_MEAL, {
         variables: {
             id: props.id,
@@ -79,7 +79,6 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
         const confirmed = window.confirm("Are you sure you want to delete this meal?");
         if (!confirmed) return;
 
-        setEditMode(false);
         deleteMeal();
     }
 
