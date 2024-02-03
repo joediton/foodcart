@@ -1,15 +1,9 @@
 import "./App.css";
 import React from "react";
-import { Auth0Provider } from "@auth0/auth0-react";
-// import { Provider as ReduxProvider } from 'react-redux';
 import { ThemeProvider, createTheme } from "@mui/material";
 import { ApolloProvider } from "@apollo/client";
 import Routes from "./routes/Routes.tsx";
-// import store from './redux/store.ts';s
 import appolloClient from "./helpers/appolloClient.ts";
-
-const authDomain = import.meta.env.VITE_AUTH_DOMAIN;
-const authClientId = import.meta.env.VITE_AUTH_CLIENT_ID;
 
 const App: React.FC = () => {
   // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -36,17 +30,7 @@ const App: React.FC = () => {
   return (
     <ApolloProvider client={appolloClient}>
       <ThemeProvider theme={theme}>
-        <Auth0Provider
-          domain={authDomain}
-          clientId={authClientId}
-          authorizationParams={{
-            redirect_uri: window.location.origin
-          }}
-        >
-          {/* <ReduxProvider store={store}> */}
-          <Routes />
-          {/* </ReduxProvider> */}
-        </Auth0Provider>
+        <Routes />
       </ThemeProvider>
     </ApolloProvider>
   );
