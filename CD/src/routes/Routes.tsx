@@ -1,16 +1,14 @@
-import React, { Suspense } from "react";
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-
-const Root = React.lazy(() => import('@/routes/Root/Root.tsx'));
-const Error = React.lazy(() => import('@/routes/Error/Error.tsx'));
-const Meals = React.lazy(() => import('@/routes/Meals/Meals.tsx'));
-const ShoppingList = React.lazy(() => import('@/routes/ShoppingList/ShoppingList.tsx'));
-const AddMeal = React.lazy(() => import('@/routes/AddMeal/AddMeal'));
-const Schedules = React.lazy(() => import('@/routes/Schedules/Schedules'));
-const GenerateSchedule = React.lazy(() => import('@/routes/GenerateSchedule/GenerateSchedule'));
+import Root from '@/routes/Root/Root.tsx';
+import Error from '@/routes/Error/Error.tsx';
+import Meals from '@/routes/Meals/Meals.tsx';
+import ShoppingList from '@/routes/ShoppingList/ShoppingList.tsx';
+import AddMeal from "./AddMeal/AddMeal";
+import Schedules from "@/routes/Schedules/Schedules";
+import GenerateSchedule from "./GenerateSchedule/GenerateSchedule";
 
 const router = createBrowserRouter([
     {
@@ -48,9 +46,7 @@ const router = createBrowserRouter([
 
 const Routes: React.FC = () => {
     return (
-        <Suspense fallback={<p>Loading</p>}>
-            <RouterProvider router={router} />
-        </Suspense>
+        <RouterProvider router={router} />
     )
 };
 
