@@ -6,9 +6,11 @@ import Root from '@/routes/Root/Root.tsx';
 import Error from '@/routes/Error/Error.tsx';
 import Meals from '@/routes/Meals/Meals.tsx';
 import ShoppingList from '@/routes/ShoppingList/ShoppingList.tsx';
-import AddMeal from "./AddMeal/AddMeal";
+import AddMeal from "@/routes/AddMeal/AddMeal";
 import Schedules from "@/routes/Schedules/Schedules";
-import GenerateSchedule from "./GenerateSchedule/GenerateSchedule";
+import GenerateSchedule from "@/routes/GenerateSchedule/GenerateSchedule";
+import Login from "@/routes/Login/Login";
+import RequireAuth from "@/components/RequiredAuth/RequiredAuth";
 
 const router = createBrowserRouter([
     {
@@ -18,27 +20,31 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Meals />,
+                element: <RequireAuth component={<Meals />} />,
             },
             {
                 path: "/meals/add",
-                element: <AddMeal />,
+                element: <RequireAuth component={<AddMeal />} />,
             },
             {
                 path: "/meals",
-                element: <Meals />,
+                element: <RequireAuth component={<Meals />} />,
             },
             {
                 path: "/schedules/generate",
-                element: <GenerateSchedule />,
+                element: <RequireAuth component={<GenerateSchedule />} />,
             },
             {
                 path: "/schedules",
-                element: <Schedules />,
+                element: <RequireAuth component={<Schedules />} />,
             },
             {
                 path: "/shopping-list",
-                element: <ShoppingList />,
+                element: <RequireAuth component={<ShoppingList />} />,
+            },
+            {
+                path: "/login",
+                element: <Login />,
             },
         ],
     },
