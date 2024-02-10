@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const All_MEALS = gql`
-  query AllMeals($email: String!) {
-    meals(filters: { users_permissions_user: { email: { eq: $email } } }) {
+  query AllMeals($id: ID!) {
+    meals(filters: { users_permissions_user: { id: { eq: $id } } }) {
       data {
         id
         attributes {
@@ -12,6 +12,11 @@ const All_MEALS = gql`
             name
             quantity
             metricUnit
+          }
+          users_permissions_user {
+            data {
+              id
+            }
           }
         }
       }

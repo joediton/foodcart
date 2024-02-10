@@ -9,9 +9,9 @@ import RootHeader from "@/components/RootHeader/RootHeader";
 import useAuth from "@/hooks/useAuth";
 
 const Meals: FC = () => {
-    const { user } = useAuth();
+    const { userId } = useAuth();
     const { data, loading, error } = useQuery<TMealsQueryResponse>(All_MEALS,
-        { variables: { email: user.email } }
+        { variables: { id: userId } }
     );
     const meals = data?.meals.data;
 

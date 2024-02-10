@@ -25,6 +25,11 @@ const UPDATE_MEAL = gql`
             quantity
             metricUnit
           }
+          users_permissions_user {
+            data {
+              id
+            }
+          }
         }
       }
     }

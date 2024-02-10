@@ -10,6 +10,7 @@ export type UserInputs = {
 const authContext = React.createContext({
   authed: false,
   user: { email: "", password: "" },
+  userId: "",
   login: (userInputs: UserInputs) => {
     console.log(userInputs);
   },
@@ -22,6 +23,7 @@ function useAuth() {
     email: "",
     password: "",
   });
+  const [userId, setUserId] = React.useState("");
 
   const [doLogin] = useMutation(LOGIN, {
     variables: {
@@ -36,6 +38,7 @@ function useAuth() {
       if (!loginData) return;
 
       localStorage.setItem("token", loginData.jwt);
+      setUserId(loginData.user.id);
 
       setAuthed(true);
     }
@@ -53,6 +56,7 @@ function useAuth() {
   return {
     authed,
     user,
+    userId,
     login(userInputs: UserInputs) {
       setUser(userInputs);
     },

@@ -8,8 +8,10 @@ import { useMutation } from "@apollo/client";
 import CREATE_MEAL from "@/graphql/mutations/createMeal";
 import All_MEALS from "@/graphql/queries/meals/allMeals";
 import RootHeader from "@/components/RootHeader/RootHeader";
+import useAuth from "@/hooks/useAuth";
 
 const AddMeal: FC = () => {
+    const { userId } = useAuth();
     const [name, setName] = useState("");
     const [timingCategory, setTimingCategory] = useState("");
     const [ingredients, setIngredients] = useState<TIngredient[]>([]);
@@ -18,6 +20,7 @@ const AddMeal: FC = () => {
             name,
             timingCategory,
             ingredients,
+            userId,
         },
         update(cache, { data }) {
             const newMeal = data?.createMeal.data;

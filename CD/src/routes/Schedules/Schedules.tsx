@@ -8,9 +8,9 @@ import RootHeader from "@/components/RootHeader/RootHeader";
 import useAuth from "@/hooks/useAuth";
 
 const Schedules: FC = () => {
-    const { user } = useAuth();
+    const { userId } = useAuth();
     const { data, loading, error } = useQuery<TSchedulesQueryResponse>(All_SCHEDULES,
-        { variables: { email: user.email } }
+        { variables: { id: userId } }
     );
     const schedules = data?.schedules.data;
 
