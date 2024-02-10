@@ -1,7 +1,6 @@
 import { gql } from "@apollo/client";
 
 const CREATE_MEAL = gql`
-  # Write your query or mutation here
   mutation CreateMeal(
     $name: String!
     $timingCategory: ENUM_MEAL_TIMINGCATEGORY!

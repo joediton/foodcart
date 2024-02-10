@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const All_SCHEDULES = gql`
-  query AllSchedules($id: ID!) {
-    schedules(filters: { users_permissions_user: { id: { eq: $id } } }) {
+  query AllSchedules($userId: ID!) {
+    schedules(filters: { users_permissions_user: { id: { eq: $userId } } }) {
       data {
         id
         attributes {
@@ -67,11 +67,6 @@ const All_SCHEDULES = gql`
               data {
                 id
               }
-            }
-          }
-          users_permissions_user {
-            data {
-              id
             }
           }
         }
