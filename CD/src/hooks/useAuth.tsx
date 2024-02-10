@@ -10,8 +10,6 @@ export type UserInputs = {
 const authContext = React.createContext({
   authed: false,
   user: { email: "", password: "" },
-  login: () => { },
-  logout: () => { },
 });
 
 function useAuth() {
@@ -51,10 +49,8 @@ function useAuth() {
   return {
     authed,
     user,
-    login(userInputs?: UserInputs) {
-      if (userInputs) {
-        setUser(userInputs);
-      }
+    login(userInputs: UserInputs) {
+      setUser(userInputs);
     },
     logout() {
       setUser({ email: "", password: "" });
