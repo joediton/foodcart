@@ -3,13 +3,13 @@ import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import { useLocation, useNavigate } from "react-router";
-import useAuth from "@/hooks/useAuth";
+import useAuth, { UserInputs } from "@/hooks/useAuth";
 
 const Login: FC = () => {
     const navigate = useNavigate();
     const { authed, login } = useAuth();
     const { state } = useLocation();
-    const [fields, setFields] = useState({
+    const [fields, setFields] = useState<UserInputs>({
         email: '',
         password: ''
     });
@@ -27,7 +27,7 @@ const Login: FC = () => {
 
     const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
-        login();
+        login(fields);
     }
 
     return (

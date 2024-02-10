@@ -5,9 +5,13 @@ import { useQuery } from "@apollo/client";
 import All_SCHEDULES from "@/graphql/queries/allSchedules";
 import { useNavigate } from "react-router";
 import RootHeader from "@/components/RootHeader/RootHeader";
+import useAuth from "@/hooks/useAuth";
 
 const Schedules: FC = () => {
-    const { data, loading, error } = useQuery<TSchedulesQueryResponse>(All_SCHEDULES);
+    const { user } = useAuth();
+    const { data, loading, error } = useQuery<TSchedulesQueryResponse>(All_SCHEDULES,
+        { variables: { email: user.email } }
+    );
     const schedules = data?.schedules.data;
 
     const navigate = useNavigate();

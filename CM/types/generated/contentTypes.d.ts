@@ -362,6 +362,77 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiMealMeal extends Schema.CollectionType {
+  collectionName: 'meals';
+  info: {
+    singularName: 'meal';
+    pluralName: 'meals';
+    displayName: 'Meal';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    timingCategory: Attribute.Enumeration<['quick', 'normal', 'slow']> &
+      Attribute.Required;
+    ingredients: Attribute.Component<'meals.ingredient', true>;
+    users_permissions_user: Attribute.Relation<
+      'api::meal.meal',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::meal.meal', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::meal.meal', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiScheduleSchedule extends Schema.CollectionType {
+  collectionName: 'schedules';
+  info: {
+    singularName: 'schedule';
+    pluralName: 'schedules';
+    displayName: 'Schedule';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    monday: Attribute.Component<'schedule.schedule-item'>;
+    tuesday: Attribute.Component<'schedule.schedule-item'>;
+    wednesday: Attribute.Component<'schedule.schedule-item'>;
+    thursday: Attribute.Component<'schedule.schedule-item'>;
+    friday: Attribute.Component<'schedule.schedule-item'>;
+    saturday: Attribute.Component<'schedule.schedule-item'>;
+    sunday: Attribute.Component<'schedule.schedule-item'>;
+    users_permissions_user: Attribute.Relation<
+      'api::schedule.schedule',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::schedule.schedule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::schedule.schedule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -717,6 +788,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    meals: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::meal.meal'
+    >;
+    schedules: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::schedule.schedule'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -781,67 +862,6 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
-export interface ApiMealMeal extends Schema.CollectionType {
-  collectionName: 'meals';
-  info: {
-    singularName: 'meal';
-    pluralName: 'meals';
-    displayName: 'Meal';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    timingCategory: Attribute.Enumeration<['quick', 'normal', 'slow']> &
-      Attribute.Required;
-    ingredients: Attribute.Component<'meals.ingredient', true>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::meal.meal', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::meal.meal', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiScheduleSchedule extends Schema.CollectionType {
-  collectionName: 'schedules';
-  info: {
-    singularName: 'schedule';
-    pluralName: 'schedules';
-    displayName: 'Schedule';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    monday: Attribute.Component<'schedule.schedule-item'>;
-    tuesday: Attribute.Component<'schedule.schedule-item'>;
-    wednesday: Attribute.Component<'schedule.schedule-item'>;
-    thursday: Attribute.Component<'schedule.schedule-item'>;
-    friday: Attribute.Component<'schedule.schedule-item'>;
-    saturday: Attribute.Component<'schedule.schedule-item'>;
-    sunday: Attribute.Component<'schedule.schedule-item'>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::schedule.schedule',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::schedule.schedule',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -852,6 +872,8 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::meal.meal': ApiMealMeal;
+      'api::schedule.schedule': ApiScheduleSchedule;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -860,8 +882,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
-      'api::meal.meal': ApiMealMeal;
-      'api::schedule.schedule': ApiScheduleSchedule;
     }
   }
 }

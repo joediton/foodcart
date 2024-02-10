@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const All_SCHEDULES = gql`
-  query AllSchedules {
-    schedules {
+  query AllSchedules($email: String!) {
+    schedules(filters: { users_permissions_user: { email: { eq: $email } } }) {
       data {
         id
         attributes {

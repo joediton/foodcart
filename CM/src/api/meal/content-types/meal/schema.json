@@ -31,6 +31,12 @@
       "repeatable": true,
       "component": "meals.ingredient",
       "required": false
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "meals"
     }
   }
 }

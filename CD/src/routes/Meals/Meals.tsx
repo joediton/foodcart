@@ -6,9 +6,13 @@ import { useNavigate } from "react-router";
 import All_MEALS from "@/graphql/queries/meals/allMeals";
 import { TMealsQueryResponse } from "@/types";
 import RootHeader from "@/components/RootHeader/RootHeader";
+import useAuth from "@/hooks/useAuth";
 
 const Meals: FC = () => {
-    const { data, loading, error } = useQuery<TMealsQueryResponse>(All_MEALS);
+    const { user } = useAuth();
+    const { data, loading, error } = useQuery<TMealsQueryResponse>(All_MEALS,
+        { variables: { email: user.email } }
+    );
     const meals = data?.meals.data;
 
     const navigate = useNavigate();
