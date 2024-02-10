@@ -10,7 +10,7 @@ import useAuth from "@/hooks/useAuth";
 const Schedules: FC = () => {
     const { userId } = useAuth();
     const { data, loading, error } = useQuery<TSchedulesQueryResponse>(All_SCHEDULES,
-        { variables: { id: userId } }
+        { variables: { userId } }
     );
     const schedules = data?.schedules.data;
 

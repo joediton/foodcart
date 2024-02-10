@@ -11,7 +11,7 @@ import useAuth from "@/hooks/useAuth";
 const Meals: FC = () => {
     const { userId } = useAuth();
     const { data, loading, error } = useQuery<TMealsQueryResponse>(All_MEALS,
-        { variables: { id: userId } }
+        { variables: { userId } }
     );
     const meals = data?.meals.data;
 
