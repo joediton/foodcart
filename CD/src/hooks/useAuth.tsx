@@ -10,8 +10,7 @@ export type UserInputs = {
 const authContext = React.createContext({
   authed: false,
   user: { email: "", password: "" },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  login: (userInputs: UserInputs) => { },
+  login: () => { },
   logout: () => { },
 });
 
@@ -52,8 +51,10 @@ function useAuth() {
   return {
     authed,
     user,
-    login(userInputs: UserInputs) {
-      setUser(userInputs);
+    login(userInputs?: UserInputs) {
+      if (userInputs) {
+        setUser(userInputs);
+      }
     },
     logout() {
       setUser({ email: "", password: "" });
