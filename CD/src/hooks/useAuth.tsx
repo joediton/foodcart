@@ -1,68 +1,35 @@
 import * as React from "react";
-import { useMutation } from "@apollo/client";
-import LOGIN from "@/graphql/mutations/login";
-
-export type UserInputs = {
-  email: string;
-  password: string;
-};
 
 const authContext = React.createContext({
   authed: false,
-  user: { email: "", password: "" },
-  userId: "",
-  login: (userInputs: UserInputs) => {
-    console.log(userInputs);
+  updateAuth: (token: string, userId: string) => {
+    console.log(token, userId)
   },
-  logout: () => { },
+  userId: "",
 });
 
 function useAuth() {
   const [authed, setAuthed] = React.useState(false);
-  const [user, setUser] = React.useState<UserInputs>({
-    email: "",
-    password: "",
-  });
-  const [userId, setUserId] = React.useState("");
-
-  const [doLogin] = useMutation(LOGIN, {
-    variables: {
-      input: {
-        identifier: user.email,
-        password: user.password,
-        provider: "local",
-      }
-    },
-    onCompleted(data) {
-      const loginData = data?.login;
-      if (!loginData) return;
-
-      localStorage.setItem("token", loginData.jwt);
-      setUserId(loginData.user.id);
-
-      setAuthed(true);
-    }
-  });
+  const [userId, setUserId] = React.useState(localStorage.getItem("userId") || "");
+  const [token, setToken] = React.useState(localStorage.getItem("token") || "");
 
   React.useEffect(() => {
-    if (user.email && user.password) {
-      doLogin();
+    if (token && userId) {
+      setAuthed(true);
     } else {
       setAuthed(false);
-      localStorage.removeItem("token");
     }
-  }, [user]);
+  }, [token, userId])
+
+  const updateAuth = (token: string, userId: string) => {
+    setToken(token);
+    setUserId(userId);
+  }
 
   return {
     authed,
-    user,
+    updateAuth,
     userId,
-    login(userInputs: UserInputs) {
-      setUser(userInputs);
-    },
-    logout() {
-      setUser({ email: "", password: "" });
-    },
   };
 }
 

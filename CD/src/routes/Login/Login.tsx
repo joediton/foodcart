@@ -3,15 +3,34 @@ import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import { useLocation, useNavigate } from "react-router";
-import useAuth, { UserInputs } from "@/hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
+import { useMutation } from "@apollo/client";
+import LOGIN from "@/graphql/mutations/login";
 
 const Login: FC = () => {
     const navigate = useNavigate();
-    const { authed, login } = useAuth();
+    const { authed, updateAuth } = useAuth();
     const { state } = useLocation();
-    const [fields, setFields] = useState<UserInputs>({
+    const [fields, setFields] = useState({
         email: '',
         password: ''
+    });
+    const [doLogin] = useMutation(LOGIN, {
+        variables: {
+            input: {
+                identifier: fields.email,
+                password: fields.password,
+                provider: "local",
+            }
+        },
+        onCompleted(data) {
+            const loginData = data?.login;
+            if (!loginData) return;
+
+            localStorage.setItem("token", loginData.jwt);
+            localStorage.setItem("userId", loginData.user.id);
+            updateAuth(loginData.jwt, loginData.user.id);
+        }
     });
 
     useEffect(() => {
@@ -27,7 +46,7 @@ const Login: FC = () => {
 
     const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
-        login(fields);
+        doLogin();
     }
 
     return (
