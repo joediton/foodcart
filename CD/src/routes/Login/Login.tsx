@@ -15,7 +15,7 @@ const Login: FC = () => {
         email: '',
         password: ''
     });
-    const [doLogin] = useMutation(LOGIN, {
+    const [doLogin, { error }] = useMutation(LOGIN, {
         variables: {
             input: {
                 identifier: fields.email,
@@ -77,6 +77,12 @@ const Login: FC = () => {
                     required={true}
                     autoComplete="current-password"
                 />
+
+                {error && (
+                    <div className="bg-black px-4 py-2 rounded-md w-full">
+                        <p className="text-red-300 text-center">{error.message}</p>
+                    </div>
+                )}
 
                 <Button variant="outlined" type="submit">Login</Button>
             </div>

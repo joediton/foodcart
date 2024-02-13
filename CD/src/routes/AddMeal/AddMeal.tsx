@@ -24,11 +24,12 @@ const AddMeal: FC = () => {
         },
         update(cache, { data }) {
             const newMeal = data?.createMeal.data;
-            const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS });
+            const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS, variables: { userId } });
             if (!newMeal || !existingMeals) return;
 
             cache.writeQuery({
                 query: All_MEALS,
+                variables: { userId },
                 data: {
                     meals: {
                         data: [...existingMeals.meals.data, newMeal],

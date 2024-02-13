@@ -18,10 +18,12 @@ import { useMutation } from "@apollo/client";
 import UPDATE_MEAL from "@/graphql/mutations/updateMeal";
 import DELETE_MEAL from "@/graphql/mutations/deleteMeal";
 import All_MEALS from "@/graphql/queries/meals/allMeals";
+import useAuth from "@/hooks/useAuth";
 
 export type TViewEditMealProps = TMeal;
 
 const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
+    const { userId } = useAuth();
     const [editMode, setEditMode] = React.useState(false);
     const [name, setName] = React.useState(props.attributes.name || "");
     const [timingCategory, setTimingCategory] = React.useState(props.attributes.timingCategory || "");
@@ -35,10 +37,12 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
         },
         update(cache, { data }) {
             const updatedMeal = data?.updateMeal.data;
-            const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS });
+            const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS, variables: { userId } });
+            if (!updatedMeal || !existingMeals) return;
 
             cache.writeQuery({
                 query: All_MEALS,
+                variables: { userId },
                 data: {
                     meals: {
                         data: existingMeals?.meals.data.map((meal: TMeal) => {
@@ -58,10 +62,12 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
         },
         update(cache, { data }) {
             const deletedMeal = data?.deleteMeal.data;
-            const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS });
+            const existingMeals: TMealsQueryResponse = cache.readQuery({ query: All_MEALS, variables: { userId } });
+            if (!deletedMeal || !existingMeals) return;
 
             cache.writeQuery({
                 query: All_MEALS,
+                variables: { userId },
                 data: {
                     meals: {
                         data: existingMeals?.meals.data.filter((meal: TMeal) => meal.id !== deletedMeal.id),

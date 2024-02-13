@@ -5,7 +5,7 @@ import {
   InMemoryCache,
   concat,
 } from "@apollo/client";
-// import { persistCache, LocalStorageWrapper } from "apollo3-cache-persist";
+import { persistCache, LocalStorageWrapper } from "apollo3-cache-persist";
 
 const cmUri = import.meta.env.VITE_CM_URI;
 
@@ -13,10 +13,10 @@ const cache = new InMemoryCache({
   addTypename: false,
 });
 
-// await persistCache({
-//   cache,
-//   storage: new LocalStorageWrapper(window.localStorage),
-// });
+await persistCache({
+  cache,
+  storage: new LocalStorageWrapper(window.localStorage),
+});
 
 const httpLink = new HttpLink({ uri: `${cmUri}/graphql` });
 
