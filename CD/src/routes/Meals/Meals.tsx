@@ -48,7 +48,7 @@ const Meals: FC = () => {
                     </div>
                 )}
 
-                {(!meals || meals.length === 0) && (
+                {(!error && (!meals || meals.length === 0)) && (
                     <p className="text-center my-10">No meals found</p>
                 )}
             </div>
