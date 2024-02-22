@@ -72,9 +72,9 @@
       "target": "api::meal.meal",
       "mappedBy": "users_permissions_user"
     },
-    "schedules": {
+    "schedule": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::schedule.schedule",
       "mappedBy": "users_permissions_user"
     }

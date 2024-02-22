@@ -413,7 +413,7 @@ export interface ApiScheduleSchedule extends Schema.CollectionType {
     sunday: Attribute.Component<'schedule.schedule-item'>;
     users_permissions_user: Attribute.Relation<
       'api::schedule.schedule',
-      'manyToOne',
+      'oneToOne',
       'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
@@ -793,9 +793,9 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::meal.meal'
     >;
-    schedules: Attribute.Relation<
+    schedule: Attribute.Relation<
       'plugin::users-permissions.user',
-      'oneToMany',
+      'oneToOne',
       'api::schedule.schedule'
     >;
     createdAt: Attribute.DateTime;
