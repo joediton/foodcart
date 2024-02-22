@@ -6,7 +6,7 @@ import GET_MEALS_BY_TIMING_CATEGORY from "@/graphql/queries/getMealsByTimingCate
 import { useQuery } from "@apollo/client";
 import useAuth from "@/hooks/useAuth";
 
-const GenerateSchedule: FC = () => {
+const AddSchedule: FC = () => {
     const { userId } = useAuth();
     const [
         selectedTimingCategories,
@@ -178,4 +178,4 @@ const GenerateSchedule: FC = () => {
     )
 }
 
-export default GenerateSchedule;
+export default AddSchedule;

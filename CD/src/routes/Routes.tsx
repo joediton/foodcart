@@ -8,9 +8,9 @@ import Meals from '@/routes/Meals/Meals.tsx';
 import ShoppingList from '@/routes/ShoppingList/ShoppingList.tsx';
 import AddMeal from "@/routes/AddMeal/AddMeal";
 import Schedules from "@/routes/Schedules/Schedules";
-import GenerateSchedule from "@/routes/GenerateSchedule/GenerateSchedule";
 import Login from "@/routes/Login/Login";
 import RequireAuth from "@/components/RequiredAuth/RequiredAuth";
+import AddSchedule from "@/routes/AddSchedule/AddSchedule";
 
 const router = createBrowserRouter([
     {
@@ -31,8 +31,8 @@ const router = createBrowserRouter([
                 element: <RequireAuth component={<Meals />} />,
             },
             {
-                path: "/schedules/generate",
-                element: <RequireAuth component={<GenerateSchedule />} />,
+                path: "/schedules/add",
+                element: <RequireAuth component={<AddSchedule />} />,
             },
             {
                 path: "/schedules",
