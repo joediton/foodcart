@@ -42,8 +42,27 @@ export type TSchedule = {
   id: string;
   attributes: {
     name: string;
-    timingCategory: string;
-    ingredients: TIngredient[];
+    monday: {
+      timingCategory: string;
+    };
+    tuesday: {
+      timingCategory: string;
+    };
+    wednesday: {
+      timingCategory: string;
+    };
+    thursday: {
+      timingCategory: string;
+    };
+    friday: {
+      timingCategory: string;
+    };
+    saturday: {
+      timingCategory: string;
+    };
+    sunday: {
+      timingCategory: string;
+    };
   };
 };
 

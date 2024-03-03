@@ -6,6 +6,7 @@ const All_SCHEDULES = gql`
       data {
         id
         attributes {
+          name
           monday {
             id
             timingCategory

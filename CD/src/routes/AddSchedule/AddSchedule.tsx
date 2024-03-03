@@ -1,10 +1,10 @@
 import { FC, FormEvent, useState } from "react";
 import { TMeal, TMealsQueryResponse, TSchedulesQueryResponse, daysOfWeek, timingCategories } from "@/types";
-import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import { useMutation, useQuery } from "@apollo/client";
 import useAuth from "@/hooks/useAuth";
-import All_MEALS from "@/graphql/queries/meals/allMeals";
+import All_MEALS from "@/graphql/queries/allMeals";
 import CREATE_SCHEDULE from "@/graphql/mutations/createSchedule";
 import All_SCHEDULES from "@/graphql/queries/allSchedules";
 import { useNavigate } from "react-router";
@@ -13,6 +13,8 @@ const AddSchedule: FC = () => {
     const navigate = useNavigate();
 
     const { userId } = useAuth();
+
+    const [name, setName] = useState("");
 
     const [
         selectedTimingCategories,
@@ -47,6 +49,7 @@ const AddSchedule: FC = () => {
     const mealsData = data?.meals.data;
 
     const variables = {
+        name,
         monday: {
             timingCategory: selectedTimingCategories.Monday,
             meal: selectedMeals.Monday,
@@ -150,7 +153,18 @@ const AddSchedule: FC = () => {
             {(meals.quick.length > 0 &&
                 meals.normal.length > 0 &&
                 meals.slow.length > 0) && (
+
                     <div className="flex flex-col gap-[10px] w-full">
+                        <TextField
+                            size="small"
+                            label="Name"
+                            type="text"
+                            value={name}
+                            className="w-full"
+                            onChange={(e) => setName(e.target.value)}
+                            required={true}
+                        />
+
                         <div className="flex flex-col gap-[10px]">
                             <div className='grid grid-cols-3 gap-[20px] items-center pb-2'>
                                 <div className="col-span-1">

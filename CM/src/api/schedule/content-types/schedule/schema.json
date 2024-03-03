@@ -53,6 +53,10 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "schedule"
+    },
+    "name": {
+      "type": "string",
+      "required": true
     }
   }
 }

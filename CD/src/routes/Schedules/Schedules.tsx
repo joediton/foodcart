@@ -6,6 +6,7 @@ import All_SCHEDULES from "@/graphql/queries/allSchedules";
 import { useNavigate } from "react-router";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import useAuth from "@/hooks/useAuth";
+import ViewEditSchedule from "@/components/ViewEditSchedule/ViewEditSchedule";
 
 const Schedules: FC = () => {
     const { userId } = useAuth();
@@ -40,9 +41,9 @@ const Schedules: FC = () => {
 
             {(schedules && schedules.length > 0) && (
                 <div className="flex flex-col gap-[10px] w-full">
-                    {/* {schedules.map((meal) => (
-                        <ViewEditMeal {...meal} key={meal.id} />
-                    ))} */}
+                    {schedules.map((schedule) => (
+                        <ViewEditSchedule {...schedule} key={schedule.id} />
+                    ))}
                 </div>
             )}
 

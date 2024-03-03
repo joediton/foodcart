@@ -416,6 +416,7 @@ export interface ApiScheduleSchedule extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    name: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

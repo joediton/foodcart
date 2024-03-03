@@ -6,7 +6,7 @@ import { TIngredient, TMealsQueryResponse, timingCategories } from "@/types";
 import EditIngredient from "@/components/EditIngredient/EditIngredient";
 import { useMutation } from "@apollo/client";
 import CREATE_MEAL from "@/graphql/mutations/createMeal";
-import All_MEALS from "@/graphql/queries/meals/allMeals";
+import All_MEALS from "@/graphql/queries/allMeals";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import useAuth from "@/hooks/useAuth";
 

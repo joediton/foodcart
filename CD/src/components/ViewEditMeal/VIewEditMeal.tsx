@@ -17,7 +17,7 @@ import EditIngredient from "../EditIngredient/EditIngredient";
 import { useMutation } from "@apollo/client";
 import UPDATE_MEAL from "@/graphql/mutations/updateMeal";
 import DELETE_MEAL from "@/graphql/mutations/deleteMeal";
-import All_MEALS from "@/graphql/queries/meals/allMeals";
+import All_MEALS from "@/graphql/queries/allMeals";
 import useAuth from "@/hooks/useAuth";
 
 export type TViewEditMealProps = TMeal;

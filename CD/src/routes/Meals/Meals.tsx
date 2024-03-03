@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import ViewEditMeal from "@/components/ViewEditMeal/VIewEditMeal";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
-import All_MEALS from "@/graphql/queries/meals/allMeals";
+import All_MEALS from "@/graphql/queries/allMeals";
 import { TMealsQueryResponse } from "@/types";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import useAuth from "@/hooks/useAuth";

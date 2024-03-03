@@ -1,8 +1,10 @@
 import { gql } from "@apollo/client";
 
 const CREATE_SCHEDULE = gql`
+  # Write your query or mutation here
   mutation CreateSchedule(
     $userId: ID!
+    $name: String!
     $monday: ComponentScheduleScheduleItemInput!
     $tuesday: ComponentScheduleScheduleItemInput!
     $wednesday: ComponentScheduleScheduleItemInput!
@@ -13,6 +15,7 @@ const CREATE_SCHEDULE = gql`
   ) {
     createSchedule(
       data: {
+        name: $name
         monday: $monday
         tuesday: $tuesday
         wednesday: $wednesday
@@ -26,6 +29,7 @@ const CREATE_SCHEDULE = gql`
       data {
         id
         attributes {
+          name
           monday {
             id
             timingCategory
