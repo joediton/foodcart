@@ -1,4 +1,4 @@
-import { TDaysOfWeek, TSchedule, daysOfWeek } from "@/types";
+import { TSchedule, daysOfWeek } from "@/types";
 import React, { FormEvent } from 'react';
 import {
     Accordion,

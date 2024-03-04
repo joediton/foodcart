@@ -41,6 +41,7 @@ export type TSchedule = {
   key?: string;
   id: string;
   attributes: {
+    [index: string]: any;
     name: string;
     monday: {
       timingCategory: string;
