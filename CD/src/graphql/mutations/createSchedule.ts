@@ -1,7 +1,6 @@
 import { gql } from "@apollo/client";
 
 const CREATE_SCHEDULE = gql`
-  # Write your query or mutation here
   mutation CreateSchedule(
     $userId: ID!
     $name: String!

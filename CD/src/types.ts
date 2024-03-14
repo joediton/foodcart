@@ -37,33 +37,24 @@ export type TMealsQueryResponse = {
   };
 } | null;
 
+export type TScheduleDay = {
+  timingCategory: string;
+  meal: TMeal;
+};
+
 export type TSchedule = {
   key?: string;
   id: string;
   attributes: {
     [index: string]: any;
     name: string;
-    monday: {
-      timingCategory: string;
-    };
-    tuesday: {
-      timingCategory: string;
-    };
-    wednesday: {
-      timingCategory: string;
-    };
-    thursday: {
-      timingCategory: string;
-    };
-    friday: {
-      timingCategory: string;
-    };
-    saturday: {
-      timingCategory: string;
-    };
-    sunday: {
-      timingCategory: string;
-    };
+    monday: TScheduleDay;
+    tuesday: TScheduleDay;
+    wednesday: TScheduleDay;
+    thursday: TScheduleDay;
+    friday: TScheduleDay;
+    saturday: TScheduleDay;
+    sunday: TScheduleDay;
   };
 };
 
