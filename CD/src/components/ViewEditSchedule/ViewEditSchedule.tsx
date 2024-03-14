@@ -1,4 +1,4 @@
-import { TSchedule, daysOfWeek } from "@/types";
+import { TSchedule, TSchedulesQueryResponse, daysOfWeek } from "@/types";
 import React, { FormEvent } from 'react';
 import {
     Accordion,
@@ -8,16 +8,16 @@ import {
     TextField
 } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import { useMutation } from "@apollo/client";
-// import useAuth from "@/hooks/useAuth";
+import { useMutation } from "@apollo/client";
+import useAuth from "@/hooks/useAuth";
 // import UPDATE_SCHEDULE from "@/graphql/mutations/updateSchedule";
-// import All_SCHEDULES from "@/graphql/queries/allSchedules";
-// import DELETE_SCHEDULE from "@/graphql/mutations/deleteSchedule";
+import All_SCHEDULES from "@/graphql/queries/allSchedules";
+import DELETE_SCHEDULE from "@/graphql/mutations/deleteSchedule";
 
 export type TViewEditScheduleProps = TSchedule;
 
 const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
-    // const { userId } = useAuth();
+    const { userId } = useAuth();
     const [editMode, setEditMode] = React.useState(false);
     const [name, setName] = React.useState(props.attributes.name || "");
     // const [
@@ -60,48 +60,49 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
     //             query: All_SCHEDULES,
     //             variables: { userId },
     //             data: {
-    //                 meals: {
-    //                     data: existingSchedules?.schedules.data.map((meal: TSchedule) => {
-    //                         if (meal.id === updatedSchedule.id) {
+    //                 shedules: {
+    //                     data: existingSchedules?.schedules.data.map((shedule: TSchedule) => {
+    //                         if (shedule.id === updatedSchedule.id) {
     //                             return updatedSchedule;
     //                         }
-    //                         return meal;
+    //                         return shedule;
     //                     }),
     //                 }
     //             }
     //         });
     //     }
     // });
-    // const [deleteSchedule] = useMutation(DELETE_SCHEDULE, {
-    //     variables: {
-    //         id: props.id,
-    //     },
-    //     update(cache, { data }) {
-    //         const deletedSchedule = data?.deleteSchedule.data;
-    //         const existingSchedules: TSchedulesQueryResponse = cache.readQuery({ query: All_SCHEDULES, variables: { userId } });
-    //         if (!deletedSchedule || !existingSchedules) return;
 
-    //         cache.writeQuery({
-    //             query: All_SCHEDULES,
-    //             variables: { userId },
-    //             data: {
-    //                 meals: {
-    //                     data: existingSchedules?.schedules.data.filter((meal: TSchedule) => meal.id !== deletedSchedule.id),
-    //                 }
-    //             }
-    //         });
-    //     }
-    // });
+    const [deleteSchedule] = useMutation(DELETE_SCHEDULE, {
+        variables: {
+            id: props.id,
+        },
+        update(cache, { data }) {
+            const deletedSchedule = data?.deleteSchedule.data;
+            const existingSchedules: TSchedulesQueryResponse = cache.readQuery({ query: All_SCHEDULES, variables: { userId } });
+            if (!deletedSchedule || !existingSchedules) return;
+
+            cache.writeQuery({
+                query: All_SCHEDULES,
+                variables: { userId },
+                data: {
+                    schedules: {
+                        data: existingSchedules?.schedules.data.filter((schedule: TSchedule) => schedule.id !== deletedSchedule.id),
+                    }
+                }
+            });
+        }
+    });
 
     const handleEditButtonClick = (): void => {
         setEditMode(true);
     }
 
     const handleDeleteScheduleButtonClick = (): void => {
-        const confirmed = window.confirm("Are you sure you want to delete this meal?");
+        const confirmed = window.confirm("Are you sure you want to delete this schedule?");
         if (!confirmed) return;
 
-        // deleteSchedule();
+        deleteSchedule();
     }
 
     const handleFormSubmit = (e: FormEvent) => {
