@@ -23,6 +23,7 @@ export type TMeal = {
     timingCategory: string;
     ingredients: TIngredient[];
   };
+  data: TMeal;
 };
 
 export type TIngredient = {

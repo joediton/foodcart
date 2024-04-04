@@ -30,7 +30,6 @@ const UPDATE_SCHEDULE = gql`
         attributes {
           name
           monday {
-            id
             timingCategory
             meal {
               data {
@@ -39,7 +38,6 @@ const UPDATE_SCHEDULE = gql`
             }
           }
           tuesday {
-            id
             timingCategory
             meal {
               data {
@@ -48,7 +46,6 @@ const UPDATE_SCHEDULE = gql`
             }
           }
           wednesday {
-            id
             timingCategory
             meal {
               data {
@@ -57,7 +54,6 @@ const UPDATE_SCHEDULE = gql`
             }
           }
           thursday {
-            id
             timingCategory
             meal {
               data {
@@ -66,7 +62,6 @@ const UPDATE_SCHEDULE = gql`
             }
           }
           friday {
-            id
             timingCategory
             meal {
               data {
@@ -75,7 +70,6 @@ const UPDATE_SCHEDULE = gql`
             }
           }
           saturday {
-            id
             timingCategory
             meal {
               data {
@@ -84,7 +78,6 @@ const UPDATE_SCHEDULE = gql`
             }
           }
           sunday {
-            id
             timingCategory
             meal {
               data {

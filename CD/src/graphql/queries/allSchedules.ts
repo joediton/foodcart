@@ -13,6 +13,9 @@ const All_SCHEDULES = gql`
             meal {
               data {
                 id
+                attributes {
+                  name
+                }
               }
             }
           }
@@ -22,6 +25,9 @@ const All_SCHEDULES = gql`
             meal {
               data {
                 id
+                attributes {
+                  name
+                }
               }
             }
           }
@@ -31,6 +37,9 @@ const All_SCHEDULES = gql`
             meal {
               data {
                 id
+                attributes {
+                  name
+                }
               }
             }
           }
@@ -40,6 +49,9 @@ const All_SCHEDULES = gql`
             meal {
               data {
                 id
+                attributes {
+                  name
+                }
               }
             }
           }
@@ -49,6 +61,9 @@ const All_SCHEDULES = gql`
             meal {
               data {
                 id
+                attributes {
+                  name
+                }
               }
             }
           }
@@ -58,6 +73,9 @@ const All_SCHEDULES = gql`
             meal {
               data {
                 id
+                attributes {
+                  name
+                }
               }
             }
           }
@@ -67,6 +85,9 @@ const All_SCHEDULES = gql`
             meal {
               data {
                 id
+                attributes {
+                  name
+                }
               }
             }
           }

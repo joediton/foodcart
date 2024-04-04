@@ -42,13 +42,13 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
         selectedMeals,
         setSelectedMeals
     ] = React.useState<{ [day: string]: string }>({
-        Monday: '',
-        Tuesday: '',
-        Wednesday: '',
-        Thursday: '',
-        Friday: '',
-        Saturday: '',
-        Sunday: '',
+        Monday: props.attributes.monday.meal.data.id,
+        Tuesday: props.attributes.tuesday.meal.data.id,
+        Wednesday: props.attributes.wednesday.meal.data.id,
+        Thursday: props.attributes.thursday.meal.data.id,
+        Friday: props.attributes.friday.meal.data.id,
+        Saturday: props.attributes.saturday.meal.data.id,
+        Sunday: props.attributes.sunday.meal.data.id,
     });
 
     const { data, loading, error } = useQuery<TMealsQueryResponse>(All_MEALS,
@@ -91,7 +91,13 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
             },
         },
         update(cache, { data }) {
+            /*
+             TODO: Need to fix this
+            
+            The request is being made successfully but the cache is not being updated
+             */
             const updatedSchedule = data?.updateSchedule.data;
+            console.log(updatedSchedule); // TODO: Remove console log when resolved
             const existingSchedules: TSchedulesQueryResponse = cache.readQuery({ query: All_SCHEDULES, variables: { userId } });
             if (!updatedSchedule || !existingSchedules) return;
 
@@ -102,6 +108,7 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
                     shedules: {
                         data: existingSchedules?.schedules.data.map((shedule: TSchedule) => {
                             if (shedule.id === updatedSchedule.id) {
+                                console.log(shedule); // TODO: Remove console log when resolved
                                 return updatedSchedule;
                             }
                             return shedule;
@@ -178,6 +185,11 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
     //     setSelectedMeals(randomMeals);
     // }
 
+    const printMealName = (mealId: string) => {
+        const meal = mealsData?.find(meal => meal.id === mealId);
+        return meal ? meal.attributes.name : '';
+    }
+
     return (
         <Accordion>
             <AccordionSummary
@@ -200,8 +212,8 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
                 {!editMode && (
                     <div className="flex flex-col gap-[30px] items-start">
                         <div className="flex flex-col gap-[10px]">
-                            <div className='grid grid-cols-3 gap-[20px] items-center pb-2'>
-                                <div className="col-span-1">
+                            <div className='grid grid-cols-3 gap-[20px] items-center pb-2 text-center'>
+                                <div className="col-span-1 text-left">
                                     <p className="font-bold m-0">Day</p>
                                 </div>
 
@@ -215,16 +227,17 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
                             </div>
 
                             {daysOfWeek.map((day) => (
-                                <div className='grid grid-cols-3 gap-[20px] items-center' key={day}>
-                                    <div className="col-span-1">
+                                <div className='grid grid-cols-3 gap-[20px] items-center text-center' key={day}>
+                                    <div className="col-span-1 text-left">
                                         <label className="m-0 p-0" htmlFor={day.toLowerCase()}>{day}</label>
                                     </div>
 
                                     <div className="col-span-1">
-                                        {props.attributes[day.toLowerCase()].timingCategory}
+                                        {selectedTimingCategories[day]}
                                     </div>
 
                                     <div className="col-span-1">
+                                        {printMealName(selectedMeals[day])}
                                     </div>
                                 </div>
                             ))}
@@ -301,7 +314,9 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
                                         >
                                             {(selectedTimingCategories[day] && meals[selectedTimingCategories[day]]) &&
                                                 meals[selectedTimingCategories[day]].map((meal) => (
-                                                    <MenuItem key={meal.id} value={meal.id}>
+                                                    <MenuItem
+                                                        key={meal.id}
+                                                        value={meal.id}>
                                                         {meal.attributes.name}
                                                     </MenuItem>
                                                 ))
