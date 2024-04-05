@@ -10,7 +10,7 @@ import All_MEALS from "@/graphql/queries/allMeals";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import useAuth from "@/hooks/useAuth";
 
-const AddMeal: FC = () => {
+const CreateMeal: FC = () => {
     const { userId } = useAuth();
     const [name, setName] = useState("");
     const [timingCategory, setTimingCategory] = useState("");
@@ -79,7 +79,7 @@ const AddMeal: FC = () => {
     return (
         <form onSubmit={handleFormSubmit}>
             <RootHeader>
-                <h1>Add Meal</h1>
+                <h1>Create Meal</h1>
 
                 <Button
                     type="submit"
@@ -153,4 +153,4 @@ const AddMeal: FC = () => {
     );
 }
 
-export default AddMeal;
+export default CreateMeal;

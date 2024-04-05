@@ -26,8 +26,8 @@ const Meals: FC = () => {
                     <Button
                         type="button"
                         variant="outlined"
-                        onClick={() => navigate('/meals/add')}
-                    >Add Meal</Button>
+                        onClick={() => navigate('/meals/create')}
+                    >Create</Button>
                 )}
             </RootHeader>
 

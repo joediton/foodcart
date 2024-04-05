@@ -9,7 +9,7 @@ import CREATE_SCHEDULE from "@/graphql/mutations/createSchedule";
 import All_SCHEDULES from "@/graphql/queries/allSchedules";
 import { useNavigate } from "react-router";
 
-const AddSchedule: FC = () => {
+const CreateSchedule: FC = () => {
     const navigate = useNavigate();
 
     const { userId } = useAuth();
@@ -137,7 +137,14 @@ const AddSchedule: FC = () => {
     return (
         <form onSubmit={handleFormSubmit}>
             <RootHeader>
-                <h1>Add Schedule</h1>
+                <h1>Create Schedule</h1>
+
+                <Button
+                    variant="outlined"
+                    type="submit"
+                >
+                    Save
+                </Button>
             </RootHeader>
 
             {loading && (
@@ -238,16 +245,9 @@ const AddSchedule: FC = () => {
                 >
                     Randomise Meals
                 </Button>
-
-                <Button
-                    variant="outlined"
-                    type="submit"
-                >
-                    Add
-                </Button>
             </div>
         </form>
     )
 }
 
-export default AddSchedule;
+export default CreateSchedule;

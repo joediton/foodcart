@@ -26,8 +26,8 @@ const Schedules: FC = () => {
                     <Button
                         type="button"
                         variant="outlined"
-                        onClick={() => navigate('/schedules/add')}
-                    >Add Schedule</Button>
+                        onClick={() => navigate('/schedules/create')}
+                    >Create</Button>
                 )}
             </RootHeader>
 

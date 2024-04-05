@@ -192,7 +192,7 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
 
                 {!editMode && (
                     <div className="flex flex-col gap-[30px] items-start">
-                        <div className="flex flex-col gap-[10px]">
+                        <div className="flex flex-col gap-[10px] w-full">
                             <div className='grid grid-cols-3 gap-[20px] items-center pb-2 text-center'>
                                 <div className="col-span-1 text-left">
                                     <p className="font-bold m-0">Day</p>

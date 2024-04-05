@@ -13,7 +13,7 @@
       --gutterWidth: 40px;
     }
 
-    @apply font-sans text-base leading-6;
+    @apply font-sans text-[14px] leading-6;
   }
 
   body {
@@ -22,32 +22,32 @@
 
   h1,
   .h1 {
-    @apply heading text-3xl;
+    @apply heading text-[24px];
   }
 
   h2,
   .h2 {
-    @apply heading text-2xl;
+    @apply heading text-[20px];
   }
 
   h3,
   .h3 {
-    @apply heading text-xl;
+    @apply heading text-[18px];
   }
 
   h4,
   .h4 {
-    @apply heading text-lg;
+    @apply heading text-[16px];
   }
 
   h5,
   .h5 {
-    @apply heading text-lg;
+    @apply heading text-[14px];
   }
 
   h6,
   .h6 {
-    @apply heading text-lg;
+    @apply heading text-[12px];
   }
 
   p {
@@ -57,7 +57,7 @@
 
 @layer utilities {
   .heading {
-    @apply font-bold leading-tight my-0;
+    @apply font-[600] leading-tight my-0;
   }
 
   .container {

@@ -5,6 +5,7 @@ import { TShoppingListsQueryResponse } from "@/types";
 import { useQuery } from "@apollo/client";
 import { Button } from "@mui/material";
 import { FC } from "react";
+import { useNavigate } from "react-router";
 
 const ShoppingList: FC = () => {
     const { userId } = useAuth();
@@ -13,19 +14,19 @@ const ShoppingList: FC = () => {
     );
     const shoppingLists = data?.shoppingLists.data;
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     return (
         <>
             <RootHeader>
-                <h1>Shopping List</h1>
+                <h1>Shopping Lists</h1>
 
                 {data && (
                     <Button
                         type="button"
                         variant="outlined"
-                    // onClick={() => navigate('/shopping-lists/add')}
-                    >Add Schedule</Button>
+                        onClick={() => navigate('/shopping-lists/create')}
+                    >Create</Button>
                 )}
             </RootHeader>
 
@@ -41,7 +42,7 @@ const ShoppingList: FC = () => {
                 <div className="flex flex-col gap-[10px] w-full">
                     {shoppingLists.map(() => (
                         // <ViewEditSchedule {...schedule} key={schedule.id} />
-                        <></>
+                        <p>Item</p>
                     ))}
                 </div>
             )}

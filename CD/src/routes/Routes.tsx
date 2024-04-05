@@ -6,11 +6,12 @@ import Root from '@/routes/Root/Root.tsx';
 import Error from '@/routes/Error/Error.tsx';
 import Meals from '@/routes/Meals/Meals.tsx';
 import ShoppingList from '@/routes/ShoppingLists/ShoppingLists';
-import AddMeal from "@/routes/AddMeal/AddMeal";
+import CreateMeal from "@/routes/CreateMeal/CreateMeal";
 import Schedules from "@/routes/Schedules/Schedules";
 import Login from "@/routes/Login/Login";
 import RequireAuth from "@/components/RequiredAuth/RequiredAuth";
-import AddSchedule from "@/routes/AddSchedule/AddSchedule";
+import CreateSchedule from "@/routes/CreateSchedule/CreateSchedule";
+import CreateShoppingList from "./CreateShoppingList/CreateShoppingList";
 
 const router = createBrowserRouter([
     {
@@ -23,16 +24,16 @@ const router = createBrowserRouter([
                 element: <RequireAuth component={<Meals />} />,
             },
             {
-                path: "/meals/add",
-                element: <RequireAuth component={<AddMeal />} />,
+                path: "/meals/create",
+                element: <RequireAuth component={<CreateMeal />} />,
             },
             {
                 path: "/meals",
                 element: <RequireAuth component={<Meals />} />,
             },
             {
-                path: "/schedules/add",
-                element: <RequireAuth component={<AddSchedule />} />,
+                path: "/schedules/create",
+                element: <RequireAuth component={<CreateSchedule />} />,
             },
             {
                 path: "/schedules",
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
             {
                 path: "/shopping-lists",
                 element: <RequireAuth component={<ShoppingList />} />,
+            },
+            {
+                path: "/shopping-lists/create",
+                element: <RequireAuth component={<CreateShoppingList />} />,
             },
             {
                 path: "/login",
