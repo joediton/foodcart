@@ -40,9 +40,9 @@ const ShoppingList: FC = () => {
 
             {(shoppingLists && shoppingLists.length > 0) && (
                 <div className="flex flex-col gap-[10px] w-full">
-                    {shoppingLists.map(() => (
+                    {shoppingLists.map((_, index) => (
                         // <ViewEditSchedule {...schedule} key={schedule.id} />
-                        <p>Item</p>
+                        <p key={index}>Item</p>
                     ))}
                 </div>
             )}

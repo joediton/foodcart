@@ -452,6 +452,11 @@ export interface ApiShoppingListShoppingList extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    schedule: Attribute.Relation<
+      'api::shopping-list.shopping-list',
+      'oneToOne',
+      'api::schedule.schedule'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

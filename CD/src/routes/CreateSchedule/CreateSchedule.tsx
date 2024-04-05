@@ -88,6 +88,10 @@ const CreateSchedule: FC = () => {
             const existingSchedules: TSchedulesQueryResponse = cache.readQuery({ query: All_SCHEDULES, variables });
             if (!newSchedule || !existingSchedules) return;
 
+            /* 
+            TODO: Resolve console error. 
+            When creating a new schedule, the new is only added to cache, seemingly wiping out the others. All creates are being successfully sent to Strapi.
+            */
             cache.writeQuery({
                 query: All_SCHEDULES,
                 variables,
