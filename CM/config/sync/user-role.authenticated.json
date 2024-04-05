@@ -1,0 +1,61 @@
+{
+  "name": "Authenticated",
+  "description": "Default role given to authenticated user.",
+  "type": "authenticated",
+  "permissions": [
+    {
+      "action": "api::meal.meal.create"
+    },
+    {
+      "action": "api::meal.meal.delete"
+    },
+    {
+      "action": "api::meal.meal.find"
+    },
+    {
+      "action": "api::meal.meal.findOne"
+    },
+    {
+      "action": "api::meal.meal.update"
+    },
+    {
+      "action": "api::schedule.schedule.create"
+    },
+    {
+      "action": "api::schedule.schedule.delete"
+    },
+    {
+      "action": "api::schedule.schedule.find"
+    },
+    {
+      "action": "api::schedule.schedule.findOne"
+    },
+    {
+      "action": "api::schedule.schedule.update"
+    },
+    {
+      "action": "api::shopping-list.shopping-list.create"
+    },
+    {
+      "action": "api::shopping-list.shopping-list.delete"
+    },
+    {
+      "action": "api::shopping-list.shopping-list.find"
+    },
+    {
+      "action": "api::shopping-list.shopping-list.findOne"
+    },
+    {
+      "action": "api::shopping-list.shopping-list.update"
+    },
+    {
+      "action": "plugin::users-permissions.auth.changePassword"
+    },
+    {
+      "action": "plugin::users-permissions.user.find"
+    },
+    {
+      "action": "plugin::users-permissions.user.me"
+    }
+  ]
+}

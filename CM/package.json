@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "strapi build",
+    "cs": "config-sync",
     "develop": "strapi develop",
     "start": "strapi start",
     "strapi": "strapi"

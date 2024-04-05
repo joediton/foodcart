@@ -1,0 +1,275 @@
+{
+  "key": "plugin_content_manager_configuration_content_types::api::schedule.schedule",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "id",
+      "defaultSortBy": "id",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "monday": {
+        "edit": {
+          "label": "monday",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "monday",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "tuesday": {
+        "edit": {
+          "label": "tuesday",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "tuesday",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "wednesday": {
+        "edit": {
+          "label": "wednesday",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "wednesday",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "thursday": {
+        "edit": {
+          "label": "thursday",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "thursday",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "friday": {
+        "edit": {
+          "label": "friday",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "friday",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "saturday": {
+        "edit": {
+          "label": "saturday",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "saturday",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "sunday": {
+        "edit": {
+          "label": "sunday",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "sunday",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "users_permissions_user": {
+        "edit": {
+          "label": "users_permissions_user",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "username"
+        },
+        "list": {
+          "label": "users_permissions_user",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "name": {
+        "edit": {
+          "label": "name",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "name",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdAt": {
+        "edit": {
+          "label": "createdAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "createdAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedAt": {
+        "edit": {
+          "label": "updatedAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "updatedAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdBy": {
+        "edit": {
+          "label": "createdBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "createdBy",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedBy": {
+        "edit": {
+          "label": "updatedBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "updatedBy",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "edit": [
+        [
+          {
+            "name": "users_permissions_user",
+            "size": 6
+          },
+          {
+            "name": "name",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "monday",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "tuesday",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "wednesday",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "thursday",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "friday",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "saturday",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "sunday",
+            "size": 12
+          }
+        ]
+      ],
+      "list": [
+        "id",
+        "createdAt",
+        "updatedAt",
+        "monday"
+      ]
+    },
+    "uid": "api::schedule.schedule"
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}
