@@ -64,3 +64,18 @@ export type TSchedulesQueryResponse = {
     data: TSchedule[];
   };
 } | null;
+
+export type TShoppingList = {
+  key?: string;
+  id: string;
+  attributes: {
+    name: string;
+  };
+  data: TShoppingList;
+};
+
+export type TShoppingListsQueryResponse = {
+  shoppingLists: {
+    data: TMeal[];
+  };
+} | null;

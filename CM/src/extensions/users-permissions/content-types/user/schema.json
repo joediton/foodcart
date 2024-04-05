@@ -9,8 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -76,6 +75,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::schedule.schedule",
+      "mappedBy": "users_permissions_user"
+    },
+    "shopping_lists": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::shopping-list.shopping-list",
       "mappedBy": "users_permissions_user"
     }
   }

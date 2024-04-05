@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "shopping_lists",
+  "info": {
+    "singularName": "shopping-list",
+    "pluralName": "shopping-lists",
+    "displayName": "Shopping List",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "shopping_lists"
+    }
+  }
+}

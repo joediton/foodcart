@@ -434,6 +434,41 @@ export interface ApiScheduleSchedule extends Schema.CollectionType {
   };
 }
 
+export interface ApiShoppingListShoppingList extends Schema.CollectionType {
+  collectionName: 'shopping_lists';
+  info: {
+    singularName: 'shopping-list';
+    pluralName: 'shopping-lists';
+    displayName: 'Shopping List';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    users_permissions_user: Attribute.Relation<
+      'api::shopping-list.shopping-list',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::shopping-list.shopping-list',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::shopping-list.shopping-list',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -767,7 +802,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -805,6 +839,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.user',
       'oneToOne',
       'api::schedule.schedule'
+    >;
+    shopping_lists: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::shopping-list.shopping-list'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -882,6 +921,7 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::meal.meal': ApiMealMeal;
       'api::schedule.schedule': ApiScheduleSchedule;
+      'api::shopping-list.shopping-list': ApiShoppingListShoppingList;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;

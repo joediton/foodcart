@@ -5,7 +5,7 @@ import {
 import Root from '@/routes/Root/Root.tsx';
 import Error from '@/routes/Error/Error.tsx';
 import Meals from '@/routes/Meals/Meals.tsx';
-import ShoppingList from '@/routes/ShoppingList/ShoppingList.tsx';
+import ShoppingList from '@/routes/ShoppingLists/ShoppingLists';
 import AddMeal from "@/routes/AddMeal/AddMeal";
 import Schedules from "@/routes/Schedules/Schedules";
 import Login from "@/routes/Login/Login";
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
                 element: <RequireAuth component={<Schedules />} />,
             },
             {
-                path: "/shopping-list",
+                path: "/shopping-lists",
                 element: <RequireAuth component={<ShoppingList />} />,
             },
             {
