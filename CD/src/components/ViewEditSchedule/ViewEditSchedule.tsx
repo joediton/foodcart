@@ -91,13 +91,7 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
             },
         },
         update(cache, { data }) {
-            /*
-             TODO: Need to fix this
-            
-            The request is being made successfully but the cache is not being updated
-             */
             const updatedSchedule = data?.updateSchedule.data;
-            console.log(updatedSchedule); // TODO: Remove console log when resolved
             const existingSchedules: TSchedulesQueryResponse = cache.readQuery({ query: All_SCHEDULES, variables: { userId } });
             if (!updatedSchedule || !existingSchedules) return;
 
@@ -105,10 +99,9 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
                 query: All_SCHEDULES,
                 variables: { userId },
                 data: {
-                    shedules: {
+                    schedules: {
                         data: existingSchedules?.schedules.data.map((shedule: TSchedule) => {
                             if (shedule.id === updatedSchedule.id) {
-                                console.log(shedule); // TODO: Remove console log when resolved
                                 return updatedSchedule;
                             }
                             return shedule;
@@ -172,18 +165,6 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
         updateSchedule();
         setEditMode(false);
     }
-
-    // const handleRandomiseMeals = () => {
-    //     const randomMeals: { [day: string]: string } = {};
-
-    //     for (const [key, value] of Object.entries(selectedTimingCategories)) {
-    //         randomMeals[key] = meals[value] ?
-    //             meals[value][Math.floor(Math.random() * meals[value].length)].id
-    //             : '';
-    //     }
-
-    //     setSelectedMeals(randomMeals);
-    // }
 
     const printMealName = (mealId: string) => {
         const meal = mealsData?.find(meal => meal.id === mealId);
@@ -263,8 +244,8 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
                         />
 
                         <div className="flex flex-col gap-[10px]">
-                            <div className='grid grid-cols-3 gap-[20px] items-center pb-2'>
-                                <div className="col-span-1">
+                            <div className='grid grid-cols-3 gap-[20px] items-center pb-2 text-center'>
+                                <div className="col-span-1 text-left">
                                     <p className="font-bold m-0">Day</p>
                                 </div>
 
