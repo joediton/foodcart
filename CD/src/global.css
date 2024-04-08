@@ -13,11 +13,11 @@
       --gutterWidth: 40px;
     }
 
-    @apply font-sans text-[14px] leading-6;
+    @apply font-sans text-[14px] leading-6 bg-light;
   }
 
   body {
-    @apply bg-[#333] text-white pb-[var(--footerHeight)] max-w-[430px] mx-auto;
+    @apply text-dark pb-[var(--footerHeight)] max-w-[430px] mx-auto;
   }
 
   h1,
@@ -52,6 +52,36 @@
 
   p {
     @apply my-0;
+  }
+
+  /* Temporary styles for Material UI */
+  .css-144pkfb-MuiBottomNavigationAction-label,
+  .css-i4bv87-MuiSvgIcon-root {
+    @apply !text-light;
+  }
+
+  .css-26zcom-MuiPaper-root-MuiAccordion-root {
+    @apply !bg-light !text-dark;
+  }
+
+  .css-1w9ogfc-MuiButtonBase-root-MuiButton-root {
+    @apply !border-dark !text-dark;
+  }
+
+  .css-zptu2e-MuiFormLabel-root-MuiInputLabel-root {
+    @apply !text-dark;
+  }
+
+  .css-vn4swy-MuiFormLabel-root {
+    @apply !text-dark;
+  }
+
+  .css-myb2s4-MuiInputBase-input-MuiOutlinedInput-input {
+    @apply !text-dark !border-dark;
+  }
+
+  .css-4wdd6p-MuiBottomNavigation-root {
+    @apply !bg-dark;
   }
 }
 
