@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
+import Button from '@/components/Button/Button';
 import RootHeader from "@/components/RootHeader/RootHeader";
 import { useLocation, useNavigate } from "react-router";
 import useAuth from "@/hooks/useAuth";
@@ -84,7 +85,7 @@ const Login: FC = () => {
                     </div>
                 )}
 
-                <Button variant="outlined" type="submit">Login</Button>
+                <Button type="submit">Login</Button>
             </div>
         </form>
     );

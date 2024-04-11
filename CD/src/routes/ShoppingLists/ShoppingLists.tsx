@@ -1,9 +1,8 @@
 import RootHeader from "@/components/RootHeader/RootHeader";
 import All_SHOPPING_LISTS from "@/graphql/queries/allShoppingLists";
 import useAuth from "@/hooks/useAuth";
-import { TShoppingListsQueryResponse } from "@/types";
 import { useQuery } from "@apollo/client";
-import { Button } from "@mui/material";
+import Button from '@/components/Button/Button';
 import { FC } from "react";
 import { useNavigate } from "react-router";
 
@@ -23,8 +22,6 @@ const ShoppingList: FC = () => {
 
                 {data && (
                     <Button
-                        type="button"
-                        variant="outlined"
                         onClick={() => navigate('/shopping-lists/create')}
                     >Create</Button>
                 )}

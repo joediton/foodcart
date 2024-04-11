@@ -12,6 +12,7 @@ import Login from "@/routes/Login/Login";
 import RequireAuth from "@/components/RequiredAuth/RequiredAuth";
 import CreateSchedule from "@/routes/CreateSchedule/CreateSchedule";
 import CreateShoppingList from "./CreateShoppingList/CreateShoppingList";
+import MealDetail from "./MealDetail/MealDetail";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <RequireAuth component={<Meals />} />,
+            },
+            {
+                path: "/meal/:mealSlug",
+                element: <RequireAuth component={<MealDetail />} />,
             },
             {
                 path: "/meals/create",

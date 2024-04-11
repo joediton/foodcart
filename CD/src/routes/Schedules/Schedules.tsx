@@ -1,6 +1,5 @@
 import { FC } from "react";
-import { TSchedulesQueryResponse } from "@/types";
-import { Button } from "@mui/material";
+import Button from '@/components/Button/Button';
 import { useQuery } from "@apollo/client";
 import All_SCHEDULES from "@/graphql/queries/allSchedules";
 import { useNavigate } from "react-router";
@@ -24,8 +23,6 @@ const Schedules: FC = () => {
 
                 {data && (
                     <Button
-                        type="button"
-                        variant="outlined"
                         onClick={() => navigate('/schedules/create')}
                     >Create</Button>
                 )}

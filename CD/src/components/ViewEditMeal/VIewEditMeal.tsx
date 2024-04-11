@@ -1,10 +1,9 @@
-import { TMeal, TMealsQueryResponse, timingCategories } from "@/types";
+import { timingCategories } from "@/types";
 import React, { FormEvent } from 'react';
 import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
-    Button,
     FormControl,
     FormControlLabel,
     FormLabel,
@@ -12,6 +11,7 @@ import {
     RadioGroup,
     TextField
 } from "@mui/material";
+import Button from '@/components/Button/Button';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIngredient from "../EditIngredient/EditIngredient";
 import { useMutation } from "@apollo/client";
@@ -168,7 +168,6 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                         )}
 
                         <Button
-                            variant="outlined"
                             onClick={handleEditButtonClick}
                         >Edit</Button>
                     </div>
@@ -235,21 +234,16 @@ const ViewEditMeal: React.FC<TViewEditMealProps> = (props) => {
                         )}
 
                         <Button
-                            type="button"
-                            variant="outlined"
                             onClick={handleAddIngredientButtonClick}
                         >Add Ingredient</Button>
 
                         <div className="flex gap-[20px] justify-between">
                             <Button
-                                type="button"
-                                variant="outlined"
                                 onClick={handleDeleteMealButtonClick}
                             >Delete Meal</Button>
 
                             <Button
                                 type="submit"
-                                variant="outlined"
                             >Save Meal</Button>
                         </div>
                     </form>

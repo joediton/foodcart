@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from 'react';
-import { TIngredient, metricUnits } from '@/types';
-import { Button, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { metricUnits } from '@/types';
+import { MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import Button from '@/components/Button/Button';
 import { Delete } from '@mui/icons-material';
 
 export type EditIngredientProps = {
@@ -40,7 +41,6 @@ const EditIngredient: React.FC<EditIngredientProps> = (props) => {
 
             <Button
                 className="col-span-2"
-                variant='outlined'
                 onClick={handleDeleteButtonClick}
             >
                 <Delete />

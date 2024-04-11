@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { useQuery } from "@apollo/client";
-import ViewEditMeal from "@/components/ViewEditMeal/VIewEditMeal";
-import { Button } from "@mui/material";
+// import ViewEditMeal from "@/components/ViewEditMeal/VIewEditMeal";
+import Button from "@/components/Button/Button";
 import { useNavigate } from "react-router";
 import All_MEALS from "@/graphql/queries/allMeals";
-import { TMealsQueryResponse } from "@/types";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import useAuth from "@/hooks/useAuth";
+import slugify from "slugify";
 
 const Meals: FC = () => {
     const { userId } = useAuth();
@@ -24,8 +24,6 @@ const Meals: FC = () => {
 
                 {data && (
                     <Button
-                        type="button"
-                        variant="outlined"
                         onClick={() => navigate('/meals/create')}
                     >Create</Button>
                 )}
@@ -43,7 +41,12 @@ const Meals: FC = () => {
                 {(meals && meals.length > 0) && (
                     <div className="flex flex-col gap-[10px] w-full">
                         {meals.map((meal) => (
-                            <ViewEditMeal {...meal} key={meal.id} />
+                            <Button
+                                key={meal.id}
+                                className="text-left"
+                                onClick={() => navigate(`/meal/${meal.id}-${slugify(meal.attributes.name.toLowerCase())}`)}
+                            >{meal.attributes.name}</Button>
+                            // <ViewEditMeal {...meal} key={meal.id} />
                         ))}
                     </div>
                 )}

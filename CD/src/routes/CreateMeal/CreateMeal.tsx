@@ -1,8 +1,9 @@
 import { FC, FormEvent, useState } from "react";
 
-import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import Button from '@/components/Button/Button';
 import { useNavigate } from "react-router";
-import { TIngredient, TMealsQueryResponse, timingCategories } from "@/types";
+import { timingCategories } from "@/types";
 import EditIngredient from "@/components/EditIngredient/EditIngredient";
 import { useMutation } from "@apollo/client";
 import CREATE_MEAL from "@/graphql/mutations/createMeal";
@@ -83,7 +84,6 @@ const CreateMeal: FC = () => {
 
                 <Button
                     type="submit"
-                    variant="outlined"
                 >Save</Button>
             </RootHeader>
 
@@ -144,8 +144,6 @@ const CreateMeal: FC = () => {
                 )}
 
                 <Button
-                    type="button"
-                    variant="outlined"
                     onClick={handleAddIngredientButtonClick}
                 >Add Ingredient</Button>
             </div>

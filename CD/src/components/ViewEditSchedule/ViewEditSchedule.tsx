@@ -1,15 +1,15 @@
-import { TMeal, TMealsQueryResponse, TSchedule, TSchedulesQueryResponse, daysOfWeek, timingCategories } from "@/types";
+import { daysOfWeek, timingCategories } from "@/types";
 import React, { FormEvent } from 'react';
 import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
-    Button,
     MenuItem,
     Select,
     SelectChangeEvent,
     TextField
 } from "@mui/material";
+import Button from "@/components/Button/Button";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useMutation, useQuery } from "@apollo/client";
 import useAuth from "@/hooks/useAuth";
@@ -225,7 +225,6 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
                         </div>
 
                         <Button
-                            variant="outlined"
                             onClick={handleEditButtonClick}
                         >Edit</Button>
                     </div>
@@ -310,14 +309,11 @@ const ViewEditSchedule: React.FC<TViewEditScheduleProps> = (props) => {
 
                         <div className="flex gap-[20px] justify-between">
                             <Button
-                                type="button"
-                                variant="outlined"
                                 onClick={handleDeleteScheduleButtonClick}
                             >Delete Schedule</Button>
 
                             <Button
                                 type="submit"
-                                variant="outlined"
                             >Save Schedule</Button>
                         </div>
                     </form>

@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import './RootHeader.css';
+import React from 'react';
 
-const RootHeader: FC<{ children: React.ReactNode }> = ({ children }) => {
+const RootHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
-        <div className='w-full sticky top-[40px] flex items-center justify-between py-6 bg-light z-10'>
+        <div className='RootHeader'>
             {children}
         </div>
     );

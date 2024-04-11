@@ -1,11 +1,11 @@
 import { FC, FormEvent, useState } from "react";
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import { MenuItem, Select, TextField } from "@mui/material";
+import Button from "@/components/Button/Button";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import { useNavigate } from "react-router";
 import { useMutation, useQuery } from "@apollo/client";
 import CREATE_SHOPPING_LIST from "@/graphql/mutations/createShoppingList";
 import All_SHOPPING_LISTS from "@/graphql/queries/allShoppingLists";
-import { TSchedulesQueryResponse, TShoppingListsQueryResponse } from "@/types";
 import useAuth from "@/hooks/useAuth";
 import All_SCHEDULES from "@/graphql/queries/allSchedules";
 
@@ -58,7 +58,6 @@ const CreateShoppingList: FC = () => {
                 <h1>Create Shopping List</h1>
 
                 <Button
-                    variant="outlined"
                     type="submit"
                 >
                     Save

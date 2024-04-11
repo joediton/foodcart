@@ -1,6 +1,7 @@
 import { FC, FormEvent, useState } from "react";
-import { TMeal, TMealsQueryResponse, TSchedulesQueryResponse, daysOfWeek, timingCategories } from "@/types";
-import { Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { daysOfWeek, timingCategories } from "@/types";
+import { MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import Button from "@/components/Button/Button";
 import RootHeader from "@/components/RootHeader/RootHeader";
 import { useMutation, useQuery } from "@apollo/client";
 import useAuth from "@/hooks/useAuth";
@@ -144,7 +145,6 @@ const CreateSchedule: FC = () => {
                 <h1>Create Schedule</h1>
 
                 <Button
-                    variant="outlined"
                     type="submit"
                 >
                     Save
@@ -243,8 +243,6 @@ const CreateSchedule: FC = () => {
 
             <div className="flex justify-between gap-[10px] w-full mt-[30px]">
                 <Button
-                    variant="outlined"
-                    type="button"
                     onClick={handleRandomiseMeals}
                 >
                     Randomise Meals

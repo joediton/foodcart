@@ -1,0 +1,5 @@
+.Button {
+  @apply border font-bold border-theme-fg rounded-md px-4 py-2
+hover:bg-theme-fg hover:text-theme-bg transition-colors 
+  duration-300 ease-in-out text-theme-fg;
+}

@@ -1,0 +1,7 @@
+.Header {
+  @apply bg-theme-fg text-theme-bg h-[40px] flex px-4 fixed w-full top-0 left-0 z-50;
+
+  button {
+    @apply bg-transparent border-none text-theme-bg ml-auto underline font-bold;
+  }
+}
